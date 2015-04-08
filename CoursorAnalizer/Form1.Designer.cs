@@ -31,6 +31,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.outTextBox = new System.Windows.Forms.TextBox();
             this.STOPBaton = new System.Windows.Forms.Button();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.RegBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,29 +49,57 @@
             // 
             // outTextBox
             // 
-            this.outTextBox.Location = new System.Drawing.Point(12, 435);
+            this.outTextBox.Location = new System.Drawing.Point(574, 435);
             this.outTextBox.Multiline = true;
             this.outTextBox.Name = "outTextBox";
             this.outTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outTextBox.Size = new System.Drawing.Size(720, 115);
+            this.outTextBox.Size = new System.Drawing.Size(524, 115);
             this.outTextBox.TabIndex = 1;
-            this.outTextBox.Text = " ";
             // 
             // STOPBaton
             // 
-            this.STOPBaton.Location = new System.Drawing.Point(997, 32);
+            this.STOPBaton.Location = new System.Drawing.Point(1053, 12);
             this.STOPBaton.Name = "STOPBaton";
-            this.STOPBaton.Size = new System.Drawing.Size(75, 23);
+            this.STOPBaton.Size = new System.Drawing.Size(45, 23);
             this.STOPBaton.TabIndex = 2;
             this.STOPBaton.Text = "STOP";
             this.STOPBaton.UseVisualStyleBackColor = true;
             this.STOPBaton.Click += new System.EventHandler(this.STOPBaton_Click);
+            // 
+            // nameTextBox
+            // 
+            this.nameTextBox.Location = new System.Drawing.Point(76, 435);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(231, 20);
+            this.nameTextBox.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 438);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Your name";
+            // 
+            // RegBtn
+            // 
+            this.RegBtn.Location = new System.Drawing.Point(313, 433);
+            this.RegBtn.Name = "RegBtn";
+            this.RegBtn.Size = new System.Drawing.Size(75, 23);
+            this.RegBtn.TabIndex = 5;
+            this.RegBtn.Text = "Reg";
+            this.RegBtn.UseVisualStyleBackColor = true;
+            this.RegBtn.Click += new System.EventHandler(this.RegBtn_Click);
             // 
             // Analizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1110, 562);
+            this.Controls.Add(this.RegBtn);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.STOPBaton);
             this.Controls.Add(this.outTextBox);
             this.Controls.Add(this.pictureBox1);
@@ -92,6 +123,9 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox outTextBox;
         private System.Windows.Forms.Button STOPBaton;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button RegBtn;
     }
 }
 
