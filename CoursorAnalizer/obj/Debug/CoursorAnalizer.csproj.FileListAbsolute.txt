@@ -1,0 +1,27 @@
+c:\users\dns\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe.config
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.pdb
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csprojResolveAssemblyReference.cache
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Analizer.resources
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Properties.Resources.resources
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csproj.GenerateResource.Cache
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.exe
+C:\Users\DNS\documents\visual studio 2012\Projects\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.pdb
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe.config
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.exe
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.pdb
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.pdb
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csprojResolveAssemblyReference.cache
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Analizer.resources
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Properties.Resources.resources
+C:\Users\Vik\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csproj.GenerateResource.Cache
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe.config
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.exe
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.pdb
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.pdb
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csprojResolveAssemblyReference.cache
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Analizer.resources
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Properties.Resources.resources
+C:\Users\dns\Desktop\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csproj.GenerateResource.Cache
