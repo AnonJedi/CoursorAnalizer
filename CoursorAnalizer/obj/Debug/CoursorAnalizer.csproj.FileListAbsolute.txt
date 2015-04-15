@@ -34,3 +34,12 @@ D:\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csprojResolveAs
 D:\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Analizer.resources
 D:\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Properties.Resources.resources
 D:\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csproj.GenerateResource.Cache
+F:\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe.config
+F:\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.exe
+F:\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.pdb
+F:\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe
+F:\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.pdb
+F:\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csprojResolveAssemblyReference.cache
+F:\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Analizer.resources
+F:\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Properties.Resources.resources
+F:\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.csproj.GenerateResource.Cache

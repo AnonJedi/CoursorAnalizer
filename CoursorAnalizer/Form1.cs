@@ -45,6 +45,11 @@ namespace CoursorAnalizer
             {
                 Time = DateTime.Now;
             }
+            else if (Counter > 0)
+            {
+                Vector.CordList.Add(Vector.Glist);
+                Vector.RefreshList(Vector.Glist);
+            }
 
             if (!isStarted && (Counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
             {
@@ -73,30 +78,45 @@ namespace CoursorAnalizer
         {
             bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
             g = Graphics.FromImage(bitmap);
-            g.DrawString("START", new Font("Microsoft Sans Serif", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
+            g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
             pictureBox1.Image = bitmap; //закидываем её в pictureBox
         }
 
         private void STOPBaton_Click(object sender, EventArgs e)
         {
-            bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
-            g = Graphics.FromImage(bitmap);
-            g.DrawString("START", new Font("Microsoft Sans Serif", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
-            pictureBox1.Image = bitmap; //закидываем её в pictureBox
+            if (isStarted)
+            {
+                NameLbl.Text = Name + " finished!";
+                bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
+                g = Graphics.FromImage(bitmap);
+                g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
+                pictureBox1.Image = bitmap; //закидываем её в pictureBox
 
-            Time = new DateTime(timer.Ticks - Time.Ticks);
-            Vector.MidV(Time, Counter);
-            outTextBox.Text += Time.Second + " : " + Time.Millisecond + "\r\n";
-            Vector.TimeCursor(Counter, outTextBox, Name);
+                if (Counter > 1)
+                {
+                    Time = new DateTime(timer.Ticks - Time.Ticks);
+                    Vector.MidV(Time, Counter);
+                    outTextBox.Text += Time.Second + " : " + Time.Millisecond + "\r\n";
+                }
+                else
+                {
+                    Vector.MidV(timer, Counter);
+                    outTextBox.Text += timer.Second + " : " + timer.Millisecond + "\r\n";
+                }
+                
+                Vector.TimeCursor(Counter, outTextBox, Name);
 
-            Counter = 0;
-            isReg = false;
-            isStarted = false;
+                Counter = 0;
+                isReg = false;
+                isStarted = false;
+            }
+            
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            Vector.Trecker(e);
+            if (isStarted)
+                Vector.Trecker(e);
         }
 
         private void RegBtn_Click(object sender, EventArgs e)
@@ -111,6 +131,12 @@ namespace CoursorAnalizer
             }
         
             nameTextBox.Text = "";
+            NameLbl.Text = Name + " in action!";
+        }
+
+        private void ExitBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
