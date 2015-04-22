@@ -16,6 +16,7 @@ namespace CoursorAnalizer
        public static List<double> Cmax = new List<double>(); 
        public static List<double> Size = new List<double>();//размер куба
        public static List<double> Len = new List<double>();//расстояние между центрами
+       public static List<double> distance = new List<double>();//длинна траектории
        public static List<DateTime> Sec = new List<DateTime>();//время
        public static double V;//средняя скорость
        public static List<double> T = new List<double>();//формула
@@ -89,11 +90,16 @@ namespace CoursorAnalizer
                A = (y + w/2 - Coord.Y - w/2)/(x - Coord.X - x/2);
                C = Coord.Y - A*(Coord.Y + w/2);
 
-               if (CordList[Counter-1].Count < 100)
+               if (CordList[Counter-1].Count < 64)
                {
                    foreach (Point p in CordList[Counter-1])
                    {
                        CList.Add(Math.Abs(A*p.X + p.Y + C)/Math.Sqrt(A*A+1));
+                   }
+
+                   for (int i = 1; i < CordList[Counter - 1].Count; i++)
+                   {
+                       distance.Add(Math.Sqrt(Math.Pow(CordList[Counter - 1][i].X - CordList[Counter - 1][i - 1].X, 2)) + Math.Sqrt(Math.Pow(CordList[Counter - 1][i].Y - CordList[Counter - 1][i - 1].Y, 2)));
                    }
 
                    double max = CList[0];
@@ -112,7 +118,12 @@ namespace CoursorAnalizer
                    for (int i = 0; i < CordList[Counter-1].Count;)
                    {
                        CList.Add(Math.Abs(A * CordList[Counter - 1][i].X + CordList[Counter - 1][i].Y + C) / Math.Sqrt(A * A + 1));
-                       i += (int)(CordList[Counter - 1].Count/100);
+                       i += (int)(CordList[Counter - 1].Count/64);
+                   }
+
+                   for (int i = 64; i < CordList[Counter - 1].Count; i+=64)
+                   {
+                       distance.Add(Math.Sqrt(Math.Pow(CordList[Counter - 1][i].X - CordList[Counter - 1][i - 64].X, 2)) + Math.Sqrt(Math.Pow(CordList[Counter - 1][i].Y - CordList[Counter - 1][i - 64].Y, 2)));
                    }
                }
 
