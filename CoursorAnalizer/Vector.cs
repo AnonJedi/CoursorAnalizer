@@ -24,6 +24,7 @@ namespace CoursorAnalizer
        public static double mCmax = 0;
        public static Dictionary<string, List<double>> Persons = new Dictionary<string, List<double>>();//список пользователей(не доделан)
        public static List<double> CList = new List<double>(); 
+       public static List<float[]> ampList = new List<float[]>(); 
        #endregion
 
        public static void TimeCursor(int Counter, TextBox t, string name)
@@ -101,17 +102,6 @@ namespace CoursorAnalizer
                    {
                        distance.Add(Math.Sqrt(Math.Pow(CordList[Counter - 1][i].X - CordList[Counter - 1][i - 1].X, 2)) + Math.Sqrt(Math.Pow(CordList[Counter - 1][i].Y - CordList[Counter - 1][i - 1].Y, 2)));
                    }
-
-                   double max = CList[0];
-                   foreach (double d in CList)
-                   {
-                       if (d > max)
-                       {
-                           max = d;
-                       }
-                   }                              
-
-                   Cmax.Add(max);
                }
                else
                {
@@ -126,6 +116,54 @@ namespace CoursorAnalizer
                        distance.Add(Math.Sqrt(Math.Pow(CordList[Counter - 1][i].X - CordList[Counter - 1][i - 64].X, 2)) + Math.Sqrt(Math.Pow(CordList[Counter - 1][i].Y - CordList[Counter - 1][i - 64].Y, 2)));
                    }
                }
+
+               double max = CList[0];
+               foreach (double d in CList)
+               {
+                   if (d > max)
+                   {
+                       max = d;
+                   }
+               }
+
+               Cmax.Add(max);
+
+               float[] ar = new float[distance.Count];
+               float[] ai = new float[distance.Count];
+               float[] amp;
+
+               for (int i = 0; i < distance.Count; i++)
+               {
+                   ar[i] = (float)distance[i];
+                   ai[i] = 0;
+               }
+
+               FFT.complexToComplex(-1, distance.Count, ar, ai);
+
+               for (int i = 0; i < distance.Count; i++)
+               {
+                   ar[ar.Length - i - 1] = ar[ar.Length - i - 1] - ar[i];
+                   ai[ai.Length - i - 1] = ai[ai.Length - i - 1] + ai[i];
+               }
+
+               double energy = 0;
+
+               float[] am = new float[distance.Count];
+
+               for (int i = 0; i < am.Length; i++)
+               {
+                   am[i] = ((ar[i] * ar[i] + ai[i] * ai[i]) / am.Length);
+                   energy += am[i];
+               }
+
+               amp = new float[distance.Count];
+
+               for (int i = 0; i < distance.Count; i++)
+               {
+                   amp[i] = am[i] / (float)energy;
+               }
+
+               ampList.Add(amp);
 
                discCList.Add(CList);
                CList = new List<double>();

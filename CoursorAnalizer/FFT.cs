@@ -1,75 +1,71 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoursorAnalizer
 {
     class FFT
     {
-        ///// <summary>
-        ///// Вычисление поворачивающего модуля e^(-i*2*PI*k/N)
-        ///// </summary>
-        ///// <param name="k"></param>
-        ///// <param name="N"></param>
-        ///// <returns></returns>
-        //private static Complex w(int k, int N)
-        //{
-        //    if (k % N == 0) return 1;
-        //    double arg = -2 * Math.PI * k / N;
-        //    return new Complex(Math.Cos(arg), Math.Sin(arg));
-        //}
-        ///// <summary>
-        ///// Возвращает спектр сигнала
-        ///// </summary>
-        ///// <param name="x">Массив значений сигнала. Количество значений должно быть степенью 2</param>
-        ///// <returns>Массив со значениями спектра сигнала</returns>
-        //public static Complex[] fft(Complex[] x)
-        //{
-        //    Complex[] X;
-        //    int N = x.Length;
-        //    if (N == 2)
-        //    {
-        //        X = new Complex[2];
-        //        X[0] = x[0] + x[1];
-        //        X[1] = x[0] - x[1];
-        //    }
-        //    else
-        //    {
-        //        Complex[] x_even = new Complex[N / 2];
-        //        Complex[] x_odd = new Complex[N / 2];
-        //        for (int i = 0; i < N / 2; i++)
-        //        {
-        //            x_even[i] = x[2 * i];
-        //            x_odd[i] = x[2 * i + 1];
-        //        }
-        //        Complex[] X_even = fft(x_even);
-        //        Complex[] X_odd = fft(x_odd);
-        //        X = new Complex[N];
-        //        for (int i = 0; i < N / 2; i++)
-        //        {
-        //            X[i] = X_even[i] + w(i, N) * X_odd[i];
-        //            X[i + N / 2] = X_even[i] - w(i, N) * X_odd[i];
-        //        }
-        //    }
-        //    return X;
-        //}
-        ///// <summary>
-        ///// Центровка массива значений полученных в fft (спектральная составляющая при нулевой частоте будет в центре массива)
-        ///// </summary>
-        ///// <param name="X">Массив значений полученный в fft</param>
-        ///// <returns></returns>
-        //public static Complex[] nfft(Complex[] X)
-        //{
-        //    int N = X.Length;
-        //    Complex[] X_n = new Complex[N];
-        //    for (int i = 0; i < N / 2; i++)
-        //    {
-        //        X_n[i] = X[N / 2 + i];
-        //        X_n[N / 2 + i] = X[i];
-        //    }
-        //    return X_n;
-        //}
+        public static void complexToComplex(int sign, int n, float[] ar, float[] ai)
+        {
+            float scale = (float) Math.Sqrt(1.0f/n);
+
+            int i, j;
+
+            for (i = j = 0; i < n; ++i)
+            {
+                if (j >= i)
+                {
+                    float tempr = ar[j]*scale;
+                    float tempi = ai[j]*scale;
+
+                    ar[j] = ar[i]*scale;
+                    ai[j] = ai[i]*scale;
+
+                    ar[i] = tempr;
+                    ai[i] = tempi;
+                }
+
+                int m = n/2;
+
+                while (m >= 1 && j >= m)
+                {
+                    j -= m;
+                    m /= 2;
+                }
+
+                j += m;
+            }
+
+            int mmax, istep;
+
+            for (mmax = 1, istep = 2*mmax; mmax < n; mmax = istep, istep = 2*mmax)
+            {
+                float delta = (float)(sign*Math.PI)/(float) mmax;
+
+                for (int k = 0; k < mmax; ++k)
+                {
+                    float w = (float) k*delta;
+                    float wr = (float) Math.Cos(w);
+                    float wi = (float) Math.Sin(w);
+
+                    for (i = k;  i < n-1; i += istep)
+                    {
+                        j = i + mmax;
+
+                        if (j >= n)
+                        {
+                            break;
+                        }
+                        float tr = wr*ar[j] - wi*ai[j];
+                        float ti = wr*ai[j] + wi*ar[j];
+
+                        ar[j] = ar[i] - tr;
+                        ai[j] = ai[i] - ti;
+
+                        ar[i] += tr;
+                        ai[i] += ti;
+                    }
+                }
+            }
+        }
     }
 }
