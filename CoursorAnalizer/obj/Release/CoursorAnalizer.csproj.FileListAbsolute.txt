@@ -1,0 +1,8 @@
+D:\git\CoursorAnalizer\CoursorAnalizer\bin\Release\CoursorAnalizer.exe.config
+D:\git\CoursorAnalizer\CoursorAnalizer\bin\Release\CoursorAnalizer.exe
+D:\git\CoursorAnalizer\CoursorAnalizer\bin\Release\CoursorAnalizer.pdb
+D:\git\CoursorAnalizer\CoursorAnalizer\obj\Release\CoursorAnalizer.Analizer.resources
+D:\git\CoursorAnalizer\CoursorAnalizer\obj\Release\CoursorAnalizer.Properties.Resources.resources
+D:\git\CoursorAnalizer\CoursorAnalizer\obj\Release\CoursorAnalizer.csproj.GenerateResource.Cache
+D:\git\CoursorAnalizer\CoursorAnalizer\obj\Release\CoursorAnalizer.exe
+D:\git\CoursorAnalizer\CoursorAnalizer\obj\Release\CoursorAnalizer.pdb

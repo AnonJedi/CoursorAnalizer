@@ -51,10 +51,6 @@ namespace CoursorAnalizer
                     {
                         j = i + mmax;
 
-                        if (j >= n)
-                        {
-                            break;
-                        }
                         float tr = wr*ar[j] - wi*ai[j];
                         float ti = wr*ai[j] + wi*ar[j];
 

@@ -8,17 +8,18 @@ namespace CoursorAnalizer
     public partial class Analizer : Form
     {
         #region Var
-        public Random rand = new Random(); //рандомчик для координат кнопки
-        public int x=0, y=0, w=0;  //координаты кнопки и её размеры
-        public Bitmap bitmap;   //холст
-        public Graphics g;  //переменная для рисования
-        public bool isStarted = false;  //проверка на нажатие кнопки старт
-        public int Counter = 0;//счетчик
-        public DateTime timer;//время начала цикла
-        public DateTime Oldtime=new DateTime();//время предыдущего цикла
-        public DateTime Time;//время работы программы
-        public string Name;
-        public bool isReg = false;
+
+        private Random rand = new Random(); //рандомчик для координат кнопки
+        private int x=0, y=0, w=0;  //координаты кнопки и её размеры
+        private Bitmap bitmap;   //холст
+        private Graphics g;  //переменная для рисования
+        private bool isStarted = false;  //проверка на нажатие кнопки старт
+        private int counter = 0;//счетчик
+        private DateTime timer;//время начала цикла
+        private DateTime oldtime=new DateTime();//время предыдущего цикла
+        private DateTime Time;//время работы программы
+        private string Name;
+        private bool isReg = false;
     
         #endregion
 
@@ -31,7 +32,6 @@ namespace CoursorAnalizer
         }
         #endregion
 
-
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             if (!isReg)
@@ -41,22 +41,21 @@ namespace CoursorAnalizer
             }
 
             timer = DateTime.Now;
-            if (Counter == 0)
+            if (counter == 0)
             {
                 Time = DateTime.Now;
             }
-            else if (Counter > 0)
+            else if (counter > 0)
             {
                 Vector.CordList.Add(Vector.Glist);
                 Vector.RefreshList(Vector.Glist);
             }
 
-            if (!isStarted && (Counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
+            if (!isStarted && (counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
             {
-                Oldtime = new DateTime(timer.Ticks - Oldtime.Ticks);
-                outTextBox.Text += Oldtime.Second + " : " + Oldtime.Millisecond + "\r\n";
-                Vector.Sec.Add(Oldtime);
-                Oldtime = timer;
+                oldtime = new DateTime(timer.Ticks - oldtime.Ticks);
+                Vector.Sec.Add(oldtime);
+                oldtime = timer;
 
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   
                 g = Graphics.FromImage(bitmap);
@@ -68,8 +67,8 @@ namespace CoursorAnalizer
                 g.FillRectangle(new SolidBrush(Color.BlueViolet), x, y, w, w);
                 pictureBox1.Image = bitmap;
                 isStarted = true;
-                Vector.SaverParam(w, x, y, Counter);
-                Counter++;
+                Vector.SaverParam(w, x, y, counter);
+                counter++;
             }
           
         }
@@ -92,21 +91,17 @@ namespace CoursorAnalizer
                 g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
                 pictureBox1.Image = bitmap; //закидываем её в pictureBox
 
-                if (Counter > 1)
+                if (counter > 1)
                 {
                     Time = new DateTime(timer.Ticks - Time.Ticks);
-                    Vector.MidV(Time, Counter);
-                    outTextBox.Text += Time.Second + " : " + Time.Millisecond + "\r\n";
+                    Vector.MidV(Time, counter);
                 }
-                else
-                {
-                    Vector.MidV(timer, Counter);
-                    outTextBox.Text += timer.Second + " : " + timer.Millisecond + "\r\n";
-                }
+                else Vector.MidV(timer, counter);               
                 
-                Vector.TimeCursor(Counter, outTextBox, Name);
-
-                Counter = 0;
+                Vector.TimeCursor(counter);
+                Vector.ShowData(outTextBox);
+                Saver.Save(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList);
+                counter = 0;
                 isReg = false;
                 isStarted = false;
             }
@@ -121,17 +116,23 @@ namespace CoursorAnalizer
 
         private void RegBtn_Click(object sender, EventArgs e)
         {
-            Name = nameTextBox.Text;
-            isReg = true;
-
-            if (Vector.Persons.Keys.Contains(Name))
+            if (!isReg)
             {
-                MessageBox.Show("This name alredy exist!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                isReg = false;
+                Name = nameTextBox.Text;
+                Vector.ReadBase();
+
+                if (Vector.users.Contains(Name))
+                {
+                    MessageBox.Show("This name alredy exist!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);                   
+                    return;
+                }
+
+                Vector.Refresher();
+                isReg = true;
+                nameTextBox.Text = "";
+                NameLbl.Text = Name + " in action!";
             }
-        
-            nameTextBox.Text = "";
-            NameLbl.Text = Name + " in action!";
+            
         }
 
         private void ExitBtn_Click(object sender, EventArgs e)
