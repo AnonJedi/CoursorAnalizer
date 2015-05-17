@@ -9,23 +9,29 @@ namespace CoursorAnalizer
    static class Vector
    {
        #region Var
-       public static Point Coord = new Point();//коорд.
+
+       private static Point Coord = new Point();//коорд.
        public static List<Point> Glist;//траектория мышки
-       public static List<List<Point>> CordList = new List<List<Point>>(); 
-       public static List<List<double>> discCList = new List<List<double>>(); 
+       public static List<List<Point>> CordList = new List<List<Point>>();
+       private static List<List<double>> discCList = new List<List<double>>(); 
        public static List<double> Cmax = new List<double>(); 
-       public static List<double> Cmid = new List<double>(); 
-       public static List<double> Size;//размер куба
+       public static List<double> Cmid = new List<double>();
+       private static List<double> Size;//размер куба
        public static List<double> Len;//расстояние между центрами
-       public static List<double> distance = new List<double>();//длинна траектории
+       private static List<double> distance = new List<double>();//длинна траектории
        public static List<DateTime> Sec;//время
-       public static double V;//средняя скорость
+       private static double V;//средняя скорость
        public static List<double> T;//формула
-       public static double mT = 0;
-       public static double mCmax = 0;
+       public static double mT;
+       public static double mCmax;
+       public static double mCmid;
+       public static double dT;
+       public static double dCmid;
+       public static double dCmax;
        public static List<string> users;//список пользователей
-       public static List<double> CList = new List<double>(); 
+       private static List<double> CList = new List<double>(); 
        public static List<float[]> ampList; 
+ 
        #endregion
 
        public static void ReadBase()
@@ -33,21 +39,51 @@ namespace CoursorAnalizer
             users = Saver.ReadDB();
        }
 
-       public static void TimeCursor(int counter)
+       public static void MathExpectation(int counter)
        {
            if (counter > 0)
            {
+               mT = 0;
+               mCmax = 0;
+               mCmid = 0;
+
                for (int i = 0; i < Len.Count; i++)
                {
                    T.Add(V * Math.Log(Len[i] / Size[i] + 1, 2));
                    mT += T[i];
-
                    mCmax += Cmax[i];
                }
 
-               mT = mT/T.Count;
-               mCmax = mCmax/Cmax.Count;
+               foreach (double d in Cmid) mCmid += d;
+
+               mT = mT/Len.Count;
+               mCmax = mCmax/Len.Count;
+               mCmid = mCmid/Cmid.Count;
            }      
+       }
+
+       public static void Variance(int counter)
+       {
+           if (counter > 0)
+           {
+               dCmid = 0;
+               for (int i = 1; i < Cmid.Count; i++)
+               {
+                   dCmid = Math.Sqrt((i - 1) * dCmid * dCmid / i + Math.Pow(Cmid[i] - mCmid, 2));
+               }
+
+               dCmax = 0;          
+               for (int i = 1; i < Cmax.Count; i++)
+               {
+                   dCmax = Math.Sqrt((i - 1) * dCmax * dCmax / i + Math.Pow(Cmax[i] - mCmax, 2));
+               }
+
+               dT = 0;              
+               for (int i = 1; i < T.Count; i++)
+               {
+                   dT = Math.Sqrt((i - 1) * dT * dT / i + Math.Pow(T[i] - mT, 2));
+               }
+           }
        }
 
        public static void MidV(DateTime t, int counter)
@@ -180,20 +216,8 @@ namespace CoursorAnalizer
            Sec = new List<DateTime>();
            T = new List<double>();
            ampList = new List<float[]>();
-       }
-
-       public static void ShowData(TextBox textBox)
-       {
-
-           textBox.Text += "Cmid:\r\n";
-           foreach (double d in Cmid) textBox.Text += d + "\r\n";
-           
-
-           textBox.Text += "T:\r\n";
-           foreach (double d in T) textBox.Text += d + "\r\n";
-
-           textBox.Text += "First 3 harmonics:\r\n";
-           foreach (float[] floats in ampList) textBox.Text += floats[0] + "  " + floats[1] + "  " + floats[2] + "\r\n";          
+           Cmax = new List<double>();
+           Cmid = new List<double>();
        }
     }
 }

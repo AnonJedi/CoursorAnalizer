@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace CoursorAnalizer
@@ -96,11 +95,12 @@ namespace CoursorAnalizer
                     Time = new DateTime(timer.Ticks - Time.Ticks);
                     Vector.MidV(Time, counter);
                 }
-                else Vector.MidV(timer, counter);               
-                
-                Vector.TimeCursor(counter);
-                Vector.ShowData(outTextBox);
-                Saver.Save(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList);
+                else Vector.MidV(timer, counter);
+
+                Vector.MathExpectation(counter);
+                Vector.Variance(counter);
+                Saver.SaveXML(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.Len);
+                Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT);
                 counter = 0;
                 isReg = false;
                 isStarted = false;
