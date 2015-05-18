@@ -30,7 +30,8 @@ namespace CoursorAnalizer
        public static double dCmax;
        public static List<string> users;//список пользователей
        private static List<double> CList = new List<double>(); 
-       public static List<float[]> ampList; 
+       public static List<float[]> ampList;
+       public static float []ampM;
  
        #endregion
 
@@ -46,6 +47,8 @@ namespace CoursorAnalizer
                mT = 0;
                mCmax = 0;
                mCmid = 0;
+               ampM = new float[10];
+               for (int i = 0; i < 10; i++) ampM[i] = 0;
 
                for (int i = 0; i < Len.Count; i++)
                {
@@ -55,10 +58,26 @@ namespace CoursorAnalizer
                }
 
                foreach (double d in Cmid) mCmid += d;
+               foreach (float[] floats in ampList)
+               {
+                   ampM[0] += floats[0];
+                   ampM[1] += floats[1];
+                   ampM[2] += floats[2];
+                   ampM[3] += floats[3];
+                   ampM[4] += floats[4];
+                   ampM[5] += floats[5];
+                   ampM[6] += floats[6];
+                   ampM[7] += floats[7];
+                   ampM[8] += floats[8];
+                   ampM[9] += floats[9];
+
+               }
 
                mT = mT/Len.Count;
                mCmax = mCmax/Len.Count;
                mCmid = mCmid/Cmid.Count;
+
+               for (int i = 0; i < 10; i++) ampM[i] = ampM[i]/ampList.Count;
            }      
        }
 

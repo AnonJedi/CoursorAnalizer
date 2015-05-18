@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml;
 
 namespace CoursorAnalizer
@@ -187,7 +186,7 @@ namespace CoursorAnalizer
             WriteDB();
         }
 
-        public static void SaveTXT(string name, double mCmid, double mCmax, double mT, double dCmid, double dCmax, double dT)
+        public static string SaveTXT(string name, double mCmid, double mCmax, double mT, double dCmid, double dCmax, double dT, float[] ampM)
         {
             string temp = "#1\r\n";
             temp += name + "\r\n";
@@ -197,12 +196,16 @@ namespace CoursorAnalizer
             temp += mCmax + "\r\n";
             temp += dCmax + "\r\n";
             temp += mT + "\r\n";
-            temp += dT + "\r\n";    
+            temp += dT + "\r\n";
+
+            foreach (float floats in ampM) temp += floats + "\r\n";
 
             using (StreamWriter file = new StreamWriter(name+".txt"))
             {
                 file.Write(temp);
             }
+
+            return temp;
         }
 
         private static void WriteDB()

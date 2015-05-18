@@ -6,7 +6,7 @@ namespace CoursorAnalizer
     {
         public static void complexToComplex(int sign, int n, float[] ar, float[] ai)
         {
-            float scale = (float) Math.Sqrt(1.0f/n);
+            var scale = (float) Math.Sqrt(1.0f/n);
 
             int i, j;
 
