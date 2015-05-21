@@ -100,7 +100,7 @@ namespace CoursorAnalizer
                 Vector.MathExpectation(counter);
                 Vector.Variance(counter);
                 Saver.SaveXML(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.Len);
-                outTextBox.Text = Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT, Vector.ampM);
+                outTextBox.Text = Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT, Vector.ampM, Vector.ampD, Vector.allAmp);
                 counter = 0;
                 isReg = false;
                 isStarted = false;

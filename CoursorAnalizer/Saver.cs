@@ -186,11 +186,13 @@ namespace CoursorAnalizer
             WriteDB();
         }
 
-        public static string SaveTXT(string name, double mCmid, double mCmax, double mT, double dCmid, double dCmax, double dT, float[] ampM)
+        public static string SaveTXT(string name, double mCmid, double mCmax, double mT, double dCmid, double dCmax, double dT, float[] ampM, float[] ampD, float[] allAmp)
         {
             string temp = "#1\r\n";
             temp += name + "\r\n";
             temp += "-\r\n";
+            temp += "1\r\n";
+            temp += "14\r\n";
             temp += mCmid + "\r\n";
             temp += dCmid + "\r\n";
             temp += mCmax + "\r\n";
@@ -198,7 +200,15 @@ namespace CoursorAnalizer
             temp += mT + "\r\n";
             temp += dT + "\r\n";
 
-            foreach (float floats in ampM) temp += floats + "\r\n";
+            for (int i = 0; i < ampM.Length; i++)
+            {
+                temp += ampM[i] + "\r\n";
+                temp += ampD[i] + "\r\n";
+            }
+
+            temp += allAmp[0] + "\r\n";
+            temp += allAmp[1] + "\r\n";
+            temp += "end";
 
             using (StreamWriter file = new StreamWriter(name+".txt"))
             {

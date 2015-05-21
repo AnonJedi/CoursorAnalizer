@@ -31,7 +31,9 @@ namespace CoursorAnalizer
        public static List<string> users;//список пользователей
        private static List<double> CList = new List<double>(); 
        public static List<float[]> ampList;
-       public static float []ampM;
+       public static float[] ampM;
+       public static float[] ampD;
+       public static float[] allAmp;
  
        #endregion
 
@@ -48,6 +50,9 @@ namespace CoursorAnalizer
                mCmax = 0;
                mCmid = 0;
                ampM = new float[10];
+               allAmp = new float[2];
+               allAmp[0] = 0;
+               allAmp[1] = 0;
                for (int i = 0; i < 10; i++) ampM[i] = 0;
 
                for (int i = 0; i < Len.Count; i++)
@@ -70,8 +75,18 @@ namespace CoursorAnalizer
                    ampM[7] += floats[7];
                    ampM[8] += floats[8];
                    ampM[9] += floats[9];
-
                }
+
+               var count = 0;
+               foreach (float[] floats in ampList)
+               {
+                   foreach (float f in floats)
+                   {
+                       count++;
+                       allAmp[0] += f;
+                   }
+               }
+               allAmp[0] = allAmp[0]/count;
 
                mT = mT/Len.Count;
                mCmax = mCmax/Len.Count;
@@ -101,6 +116,37 @@ namespace CoursorAnalizer
                for (int i = 1; i < T.Count; i++)
                {
                    dT = Math.Sqrt((i - 1) * dT * dT / i + Math.Pow(T[i] - mT, 2));
+               }
+
+               List<float> temp = new List<float>();
+               foreach (float[] floats in ampList)
+               {
+                   foreach (float f in floats)
+                   {
+                       temp.Add(f);
+                   }
+               }
+
+               for (int i = 1; i < temp.Count; i++)
+               {
+                   allAmp[1] = (float)Math.Sqrt((i - 1) * allAmp[1] * allAmp[1] / i + Math.Pow(temp[i] - allAmp[0], 2));                   
+               }
+
+               ampD = new float[10];
+               for (int i = 0; i < 10; i++) ampD[i] = 0;
+
+               for (int i = 1; i < ampList.Count; i++)
+               {
+                   ampD[0] = (float)Math.Sqrt((i - 1) * ampD[0] * ampD[0] / i + Math.Pow(ampList[i][0] - ampM[0], 2));
+                   ampD[1] = (float)Math.Sqrt((i - 1) * ampD[1] * ampD[1] / i + Math.Pow(ampList[i][1] - ampM[1], 2));
+                   ampD[2] = (float)Math.Sqrt((i - 1) * ampD[2] * ampD[2] / i + Math.Pow(ampList[i][2] - ampM[2], 2));
+                   ampD[3] = (float)Math.Sqrt((i - 1) * ampD[3] * ampD[3] / i + Math.Pow(ampList[i][3] - ampM[3], 2));
+                   ampD[4] = (float)Math.Sqrt((i - 1) * ampD[4] * ampD[4] / i + Math.Pow(ampList[i][4] - ampM[4], 2));
+                   ampD[5] = (float)Math.Sqrt((i - 1) * ampD[5] * ampD[5] / i + Math.Pow(ampList[i][5] - ampM[5], 2));
+                   ampD[6] = (float)Math.Sqrt((i - 1) * ampD[6] * ampD[6] / i + Math.Pow(ampList[i][6] - ampM[6], 2));
+                   ampD[7] = (float)Math.Sqrt((i - 1) * ampD[7] * ampD[7] / i + Math.Pow(ampList[i][7] - ampM[7], 2));
+                   ampD[8] = (float)Math.Sqrt((i - 1) * ampD[8] * ampD[8] / i + Math.Pow(ampList[i][8] - ampM[8], 2));
+                   ampD[9] = (float)Math.Sqrt((i - 1) * ampD[9] * ampD[9] / i + Math.Pow(ampList[i][9] - ampM[9], 2));
                }
            }
        }
