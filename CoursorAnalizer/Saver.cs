@@ -59,16 +59,7 @@ namespace CoursorAnalizer
             XmlNode cMid;
             XmlNode cMax;
             XmlNode t;
-            XmlNode amp1;
-            XmlNode amp2;
-            XmlNode amp3;
-            XmlNode amp4;
-            XmlNode amp5;
-            XmlNode amp6;
-            XmlNode amp7;
-            XmlNode amp8;
-            XmlNode amp9;
-            XmlNode amp10;
+            XmlNode amp;
             DateTime time = DateTime.Now;
             #endregion
 
@@ -80,6 +71,7 @@ namespace CoursorAnalizer
             user.AppendChild(realDate);
 
             #region Magic
+
             int i = 0;
             foreach (double d in Cmid)
             {
@@ -103,75 +95,16 @@ namespace CoursorAnalizer
                 user.AppendChild(t);
             }
 
-            foreach (float[] floats in ampList)
+            for (int k = 0; k < 10; k++)
             {
-                amp1 = xmlDocument.CreateElement("FeatureID4");
-                amp1.InnerText = floats[0].ToString();
-                user.AppendChild(amp1);
+                for (int j = 0; j < ampList.Count; j++)
+                {
+                    amp = xmlDocument.CreateElement("FeatureID" + (k + 4));
+                    amp.InnerText = ampList[j][k].ToString();
+                    user.AppendChild(amp);
+                }
             }
 
-            foreach (float[] floats in ampList)
-            {
-                amp2 = xmlDocument.CreateElement("FeatureID5");
-                amp2.InnerText = floats[1].ToString();
-                user.AppendChild(amp2);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp3 = xmlDocument.CreateElement("FeatureID6");
-                amp3.InnerText = floats[2].ToString();
-                user.AppendChild(amp3);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp4 = xmlDocument.CreateElement("FeatureID7");
-                amp4.InnerText = floats[2].ToString();
-                user.AppendChild(amp4);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp5 = xmlDocument.CreateElement("FeatureID8");
-                amp5.InnerText = floats[2].ToString();
-                user.AppendChild(amp5);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp6 = xmlDocument.CreateElement("FeatureID9");
-                amp6.InnerText = floats[2].ToString();
-                user.AppendChild(amp6);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp7 = xmlDocument.CreateElement("FeatureID10");
-                amp7.InnerText = floats[2].ToString();
-                user.AppendChild(amp7);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp8 = xmlDocument.CreateElement("FeatureID11");
-                amp8.InnerText = floats[2].ToString();
-                user.AppendChild(amp8);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp9 = xmlDocument.CreateElement("FeatureID12");
-                amp9.InnerText = floats[2].ToString();
-                user.AppendChild(amp9);
-            }
-
-            foreach (float[] floats in ampList)
-            {
-                amp10 = xmlDocument.CreateElement("FeatureID13");
-                amp10.InnerText = floats[2].ToString();
-                user.AppendChild(amp10);
-            }
             #endregion
 
             root.AppendChild(user);
@@ -216,6 +149,31 @@ namespace CoursorAnalizer
             }
 
             return temp;
+        }
+
+        public static void SaveTXT(string name, List<double> Cmid, List<double> Cmax, List<double> T, List<float[]> ampList,
+            List<double> energy)
+        {
+            string temp = "Cmid\r\n";
+            foreach (double d in Cmid) temp += d + "\r\n";
+            temp += "Cmax\r\n";
+            foreach (double d in Cmax) temp += d + "\r\n";
+            temp += "T\r\n";
+            foreach (double d in T) temp += d + "\r\n";
+
+            for (int j = 0; j < 10; j++)
+            {
+                temp += "amp" + j+1 + "\r\n";
+                for (int i = 0; i < ampList.Count; i++) temp += ampList[i][j] + "\r\n";
+            }
+           
+            temp += "energy\r\n";
+            foreach (double d in energy) temp += d + "\r\n";
+
+            using (StreamWriter file = new StreamWriter(name + "-2.txt"))
+            {
+                file.Write(temp);
+            }
         }
 
         private static void WriteDB()

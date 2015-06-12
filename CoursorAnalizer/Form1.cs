@@ -52,6 +52,7 @@ namespace CoursorAnalizer
 
             if (!isStarted && (counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
             {
+                counterLbl.Text = (counter).ToString();
                 oldtime = new DateTime(timer.Ticks - oldtime.Ticks);
                 Vector.Sec.Add(oldtime);
                 oldtime = timer;
@@ -101,6 +102,7 @@ namespace CoursorAnalizer
                 Vector.Variance(counter);
                 Saver.SaveXML(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.Len);
                 outTextBox.Text = Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT, Vector.ampM, Vector.ampD, Vector.allAmp);
+                Saver.SaveTXT(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.energyList);
                 counter = 0;
                 isReg = false;
                 isStarted = false;
@@ -118,6 +120,7 @@ namespace CoursorAnalizer
         {
             if (!isReg)
             {
+                counterLbl.Text = "0";
                 Name = nameTextBox.Text;
                 Vector.ReadBase();
 

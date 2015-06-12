@@ -36,6 +36,7 @@
             this.RegBtn = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.NameLbl = new System.Windows.Forms.Label();
+            this.counterLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,12 +132,24 @@
             this.NameLbl.Size = new System.Drawing.Size(0, 19);
             this.NameLbl.TabIndex = 8;
             // 
+            // counterLbl
+            // 
+            this.counterLbl.AutoSize = true;
+            this.counterLbl.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.counterLbl.ForeColor = System.Drawing.Color.Green;
+            this.counterLbl.Location = new System.Drawing.Point(488, 438);
+            this.counterLbl.Name = "counterLbl";
+            this.counterLbl.Size = new System.Drawing.Size(80, 22);
+            this.counterLbl.TabIndex = 9;
+            this.counterLbl.Text = "Counter";
+            // 
             // Analizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1110, 562);
+            this.Controls.Add(this.counterLbl);
             this.Controls.Add(this.NameLbl);
             this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.RegBtn);
@@ -171,6 +184,7 @@
         private System.Windows.Forms.Button RegBtn;
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.Label NameLbl;
+        private System.Windows.Forms.Label counterLbl;
     }
 }
 

@@ -34,6 +34,7 @@ namespace CoursorAnalizer
        public static float[] ampM;
        public static float[] ampD;
        public static float[] allAmp;
+       public static List<double> energyList = new List<double>(); 
  
        #endregion
 
@@ -248,6 +249,7 @@ namespace CoursorAnalizer
                        energy += am[i];
                    }
 
+                   energyList.Add(energy);
                    amp = new float[distance.Count];
 
                    for (int i = 0; i < distance.Count; i++) amp[i] = am[i] / (float)energy;                 
@@ -283,6 +285,7 @@ namespace CoursorAnalizer
            ampList = new List<float[]>();
            Cmax = new List<double>();
            Cmid = new List<double>();
+           energyList = new List<double>();
        }
     }
 }
