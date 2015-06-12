@@ -1,75 +1,152 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FeaturesValues>
-  <User>
-    <ClassName>15</ClassName>
-    <RealizationsDescription>Эксперимент проводился в обычных условиях</RealizationsDescription>
-    <RealizationDate>12.06.2015 13:28:53</RealizationDate>
-    <FeatureID1>0,521690104852538</FeatureID1>
-    <FeatureID1>0,287090758392043</FeatureID1>
-    <FeatureID1>1,0262962818462</FeatureID1>
-    <FeatureID1>0,413409569323548</FeatureID1>
-    <FeatureID1>0,29334340550299</FeatureID1>
-    <FeatureID1>0,354837466908218</FeatureID1>
-    <FeatureID1>0,352404465435809</FeatureID1>
-    <FeatureID1>0,644937476392119</FeatureID1>
-    <FeatureID1>1,23503342051729</FeatureID1>
-    <FeatureID2>347,910023735139</FeatureID2>
-    <FeatureID2>295</FeatureID2>
-    <FeatureID2>511</FeatureID2>
-    <FeatureID2>477</FeatureID2>
-    <FeatureID2>423</FeatureID2>
-    <FeatureID2>531,578874674305</FeatureID2>
-    <FeatureID2>407</FeatureID2>
-    <FeatureID2>675</FeatureID2>
-    <FeatureID2>659</FeatureID2>
-    <FeatureID3>2035,30408937398</FeatureID3>
-    <FeatureID3>3044,62477962602</FeatureID3>
-    <FeatureID3>1582,45107430964</FeatureID3>
-    <FeatureID3>3900,40936854069</FeatureID3>
-    <FeatureID3>4691,97376264637</FeatureID3>
-    <FeatureID3>3085,21906125413</FeatureID3>
-    <FeatureID3>2542,58756724918</FeatureID3>
-    <FeatureID3>3191,69169403613</FeatureID3>
-    <FeatureID3>1394,73053133093</FeatureID3>
-    <FeatureID4>0,2474283</FeatureID4>
-    <FeatureID4>0,09743647</FeatureID4>
-    <FeatureID4>0,1153137</FeatureID4>
-    <FeatureID4>0,07756777</FeatureID4>
-    <FeatureID5>0,01467085</FeatureID5>
-    <FeatureID5>0,01058402</FeatureID5>
-    <FeatureID5>0,009610698</FeatureID5>
-    <FeatureID5>0,005286481</FeatureID5>
-    <FeatureID6>0,002338081</FeatureID6>
-    <FeatureID6>0,02263794</FeatureID6>
-    <FeatureID6>0,001369559</FeatureID6>
-    <FeatureID6>0,003136649</FeatureID6>
-    <FeatureID7>0,02848872</FeatureID7>
-    <FeatureID7>0,001580912</FeatureID7>
-    <FeatureID7>0,0006383203</FeatureID7>
-    <FeatureID7>0,003347606</FeatureID7>
-    <FeatureID8>0,04705655</FeatureID8>
-    <FeatureID8>0,00817379</FeatureID8>
-    <FeatureID8>0,005262934</FeatureID8>
-    <FeatureID8>0,005617818</FeatureID8>
-    <FeatureID9>0,03295219</FeatureID9>
-    <FeatureID9>0,01571407</FeatureID9>
-    <FeatureID9>0,002424641</FeatureID9>
-    <FeatureID9>0,007455121</FeatureID9>
-    <FeatureID10>0,005372169</FeatureID10>
-    <FeatureID10>0,0167144</FeatureID10>
-    <FeatureID10>0,03427413</FeatureID10>
-    <FeatureID10>0,005103122</FeatureID10>
-    <FeatureID11>0,00311148</FeatureID11>
-    <FeatureID11>0,004273739</FeatureID11>
-    <FeatureID11>0,004783116</FeatureID11>
-    <FeatureID11>0,000686404</FeatureID11>
-    <FeatureID12>0,04118435</FeatureID12>
-    <FeatureID12>0,007433465</FeatureID12>
-    <FeatureID12>0,001210766</FeatureID12>
-    <FeatureID12>0,001425506</FeatureID12>
-    <FeatureID13>0,03318928</FeatureID13>
-    <FeatureID13>0,006834527</FeatureID13>
-    <FeatureID13>0,007060585</FeatureID13>
-    <FeatureID13>0,0008320818</FeatureID13>
-  </User>
+  <Class name="15">
+    <Realizations description="Эксперимент проводился в обычных условиях">
+      <Realization date="12.06.2015 16:50:53">
+        <Feature id="1" value="0,467517189623349" />
+        <Feature id="1" value="2,19539561170213" />
+        <Feature id="1" value="3,26869204971395" />
+        <Feature id="1" value="2,17169016366877" />
+        <Feature id="1" value="1,08263499986109" />
+        <Feature id="1" value="1,00209872510773" />
+        <Feature id="1" value="0,243084514873506" />
+        <Feature id="1" value="0,625652113555636" />
+        <Feature id="1" value="0,757417689687935" />
+        <Feature id="1" value="0,56375783739336" />
+        <Feature id="1" value="0,465254894359372" />
+        <Feature id="2" value="512" />
+        <Feature id="2" value="449" />
+        <Feature id="2" value="485" />
+        <Feature id="2" value="457" />
+        <Feature id="2" value="879,919247631816" />
+        <Feature id="2" value="741,755013464688" />
+        <Feature id="2" value="315" />
+        <Feature id="2" value="576,7497163364" />
+        <Feature id="2" value="884,805289315113" />
+        <Feature id="2" value="508" />
+        <Feature id="2" value="593" />
+        <Feature id="3" value="2042,77376277261" />
+        <Feature id="3" value="813,267877019192" />
+        <Feature id="3" value="1272,24440259389" />
+        <Feature id="3" value="727,257308190302" />
+        <Feature id="3" value="2358,80309587358" />
+        <Feature id="3" value="1502,09013679586" />
+        <Feature id="3" value="1816,60406485567" />
+        <Feature id="3" value="1691,01611800599" />
+        <Feature id="3" value="3084,16594055369" />
+        <Feature id="3" value="1723,47794595592" />
+        <Feature id="3" value="3399,56842120189" />
+        <Feature id="4" value="0,1705243" />
+        <Feature id="4" value="0,03180202" />
+        <Feature id="4" value="0,1544155" />
+        <Feature id="4" value="0,03168755" />
+        <Feature id="4" value="0,04766578" />
+        <Feature id="4" value="0,08307936" />
+        <Feature id="4" value="0,2733707" />
+        <Feature id="4" value="0,09874917" />
+        <Feature id="4" value="0,08544392" />
+        <Feature id="4" value="0,07897093" />
+        <Feature id="4" value="0,08759606" />
+        <Feature id="5" value="0,03963161" />
+        <Feature id="5" value="0,0004516198" />
+        <Feature id="5" value="0,02264902" />
+        <Feature id="5" value="0,002345181" />
+        <Feature id="5" value="0,005665562" />
+        <Feature id="5" value="0,01386952" />
+        <Feature id="5" value="0,1785607" />
+        <Feature id="5" value="0,0008112021" />
+        <Feature id="5" value="0,01817923" />
+        <Feature id="5" value="0,005493717" />
+        <Feature id="5" value="0,001188041" />
+        <Feature id="6" value="0,01791442" />
+        <Feature id="6" value="0,01706307" />
+        <Feature id="6" value="0,02164665" />
+        <Feature id="6" value="0,01350006" />
+        <Feature id="6" value="0,002807031" />
+        <Feature id="6" value="0,01864487" />
+        <Feature id="6" value="0,07437024" />
+        <Feature id="6" value="0,009952682" />
+        <Feature id="6" value="0,0008216766" />
+        <Feature id="6" value="0,0007989532" />
+        <Feature id="6" value="0,00379961" />
+        <Feature id="7" value="0,01088403" />
+        <Feature id="7" value="0,0001244604" />
+        <Feature id="7" value="0,01828408" />
+        <Feature id="7" value="0,004135662" />
+        <Feature id="7" value="0,003773632" />
+        <Feature id="7" value="0,001301374" />
+        <Feature id="7" value="0,01399697" />
+        <Feature id="7" value="0,004702232" />
+        <Feature id="7" value="0,001809978" />
+        <Feature id="7" value="0,003415442" />
+        <Feature id="7" value="0,005806508" />
+        <Feature id="8" value="0,001258235" />
+        <Feature id="8" value="0,01734206" />
+        <Feature id="8" value="0,01743161" />
+        <Feature id="8" value="0,01387237" />
+        <Feature id="8" value="0,001716673" />
+        <Feature id="8" value="0,01058449" />
+        <Feature id="8" value="0,002450435" />
+        <Feature id="8" value="0,009198286" />
+        <Feature id="8" value="0,002292456" />
+        <Feature id="8" value="0,01193318" />
+        <Feature id="8" value="0,00185841" />
+        <Feature id="9" value="0,006152062" />
+        <Feature id="9" value="7,029656E-05" />
+        <Feature id="9" value="0,01687498" />
+        <Feature id="9" value="0,002516058" />
+        <Feature id="9" value="0,00397848" />
+        <Feature id="9" value="0,006983457" />
+        <Feature id="9" value="0,01070487" />
+        <Feature id="9" value="0,01225977" />
+        <Feature id="9" value="0,0002319703" />
+        <Feature id="9" value="5,163664E-05" />
+        <Feature id="9" value="0,002038129" />
+        <Feature id="10" value="0,01914957" />
+        <Feature id="10" value="0,01438673" />
+        <Feature id="10" value="0,01659121" />
+        <Feature id="10" value="0,01655982" />
+        <Feature id="10" value="0,003622139" />
+        <Feature id="10" value="0,02112325" />
+        <Feature id="10" value="0,006909755" />
+        <Feature id="10" value="0,0008791025" />
+        <Feature id="10" value="0,001609632" />
+        <Feature id="10" value="0,001042843" />
+        <Feature id="10" value="0,007487969" />
+        <Feature id="11" value="0,009990431" />
+        <Feature id="11" value="0,000114358" />
+        <Feature id="11" value="0,01766421" />
+        <Feature id="11" value="0,0002535797" />
+        <Feature id="11" value="0,003510507" />
+        <Feature id="11" value="0,006759458" />
+        <Feature id="11" value="0,0003854355" />
+        <Feature id="11" value="0,005027634" />
+        <Feature id="11" value="0,008506472" />
+        <Feature id="11" value="0,009200175" />
+        <Feature id="11" value="0,002033444" />
+        <Feature id="12" value="0,02084951" />
+        <Feature id="12" value="0,01836515" />
+        <Feature id="12" value="0,01779344" />
+        <Feature id="12" value="0,02247257" />
+        <Feature id="12" value="0,0360979" />
+        <Feature id="12" value="0,003180957" />
+        <Feature id="12" value="0,00235222" />
+        <Feature id="12" value="0,008489227" />
+        <Feature id="12" value="0,02589478" />
+        <Feature id="12" value="0,005799418" />
+        <Feature id="12" value="0,0007151688" />
+        <Feature id="13" value="0,02778953" />
+        <Feature id="13" value="0,0003187135" />
+        <Feature id="13" value="0,02051926" />
+        <Feature id="13" value="0,002883151" />
+        <Feature id="13" value="0,02459169" />
+        <Feature id="13" value="0,00175438" />
+        <Feature id="13" value="0,005446281" />
+        <Feature id="13" value="0,006378156" />
+        <Feature id="13" value="0,01194694" />
+        <Feature id="13" value="0,00210238" />
+        <Feature id="13" value="0,00104683" />
+      </Realization>
+    </Realizations>
+  </Class>
 </FeaturesValues>
