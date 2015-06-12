@@ -120,7 +120,6 @@ namespace CoursorAnalizer
         {
             if (!isReg)
             {
-                counterLbl.Text = "0";
                 Name = nameTextBox.Text;
                 Vector.ReadBase();
 
@@ -130,6 +129,7 @@ namespace CoursorAnalizer
                     return;
                 }
 
+                counterLbl.Text = "0";
                 Vector.Refresher();
                 isReg = true;
                 nameTextBox.Text = "";
