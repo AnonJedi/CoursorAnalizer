@@ -1,2 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<root></root> 
+ <Classes>
+  <Specification description="Эксперимент проводился в обычных условиях">
+    <Feature id="1" description="Cmid" />
+    <Feature id="2" description="Cmax" />
+    <Feature id="3" description="T" />
+    <Feature id="4" description="Первая амплитуда" />
+    <Feature id="5" description="Вторая амплитуда" />
+    <Feature id="6" description="Третья амплитуда" />
+    <Feature id="7" description="Четвёртая амплитуда" />
+    <Feature id="8" description="Пятая амплитуда" />
+    <Feature id="9" description="Шестая амплитуда" />
+    <Feature id="10" description="Седьмая амплитуда" />
+    <Feature id="11" description="Восьмая амплитуда" />
+    <Feature id="12" description="Девятая амплитуда" />
+    <Feature id="13" description="Десятая амплитуда" />
+    <Feature id="14" description="Скорость мыши" />
+    <Feature id="15" description="Энергия" />
+  </Specification >
+  <Features></Features>
+</Classes>

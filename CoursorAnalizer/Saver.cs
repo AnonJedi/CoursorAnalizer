@@ -11,6 +11,7 @@ namespace CoursorAnalizer
 
         private static byte[] DBBytes;
         private static XmlDocument xmlDocument;
+        private static XmlNode root;
         private static string file = "DataBase.xml";
         private static List<string> users;
 
@@ -44,108 +45,103 @@ namespace CoursorAnalizer
         private static List<string> Parse()
         {
             users = new List<string>();
-            foreach (XmlNode node in xmlDocument.SelectNodes("/FeaturesValues"))
+            root = xmlDocument.DocumentElement;
+            XmlNode featuresNode = root.SelectSingleNode("descendant::Features");
+            foreach (XmlNode node in featuresNode.SelectNodes("Class"))
             {
-                users.Add(node.SelectSingleNode("Class").Attributes.GetNamedItem("name").Value);
+                users.Add(node.Attributes.GetNamedItem("name").Value);
             }
             return users;
         }
 
-        public static void SaveXML(string name, List<double> Cmid, List<double> Cmax, List<double> T, List<float[]> ampList, List<double> len)
+        public static void SaveXML(string name, List<double> Cmid, List<double> Cmax, List<double> T, List<float[]> ampList, List<double> V, List<double> energyList)
         {
             #region Var
-            XmlNode featuresValueNode = xmlDocument.SelectSingleNode("/FeaturesValues");
+            root = xmlDocument.DocumentElement;
+            XmlNode featuresNode = root.SelectSingleNode("descendant::Features");
+            
             XmlNode classNode = xmlDocument.CreateElement("Class");
             XmlAttribute nameAttribute = xmlDocument.CreateAttribute("name");
 
-            XmlNode realizationsNode = xmlDocument.CreateElement("Realizations");
-            XmlAttribute descriptionAttribute = xmlDocument.CreateAttribute("description");
-
-            XmlNode realizationNode = xmlDocument.CreateElement("Realization");
-            XmlAttribute dateAttribute = xmlDocument.CreateAttribute("date");
-
-            XmlNode featureNode = xmlDocument.CreateElement("Feature");
+            XmlNode realizationNode;
+            XmlNode featureNode;
             XmlAttribute idAttribute;
             XmlAttribute valueAttribute;
 
-            DateTime time = DateTime.Now;
             #endregion
 
             nameAttribute.InnerText = name;
             classNode.Attributes.Append(nameAttribute);
 
-            descriptionAttribute.InnerText = "Эксперимент проводился в обычных условиях";
-            realizationsNode.Attributes.Append(descriptionAttribute);
-
-            dateAttribute.InnerText = time.ToString();
-            realizationNode.Attributes.Append(dateAttribute);
-
             #region Magic
 
             for (int i = 0; i < Cmid.Count; i++)
             {
+                realizationNode = xmlDocument.CreateElement("Realization");
+
+                featureNode = xmlDocument.CreateElement("Feature");
                 idAttribute = xmlDocument.CreateAttribute("id");
                 idAttribute.InnerText = "1";
-
                 valueAttribute = xmlDocument.CreateAttribute("value");
-                valueAttribute.InnerText = (Cmid[i]/len[i]).ToString();
+                valueAttribute.InnerText = Cmid[i].ToString();
                 featureNode.Attributes.Append(idAttribute);
                 featureNode.Attributes.Append(valueAttribute);
                 realizationNode.AppendChild(featureNode);
 
                 featureNode = xmlDocument.CreateElement("Feature");
-            }
-
-            foreach (double d in Cmax)
-            {
                 idAttribute = xmlDocument.CreateAttribute("id");
                 idAttribute.InnerText = "2";
-
                 valueAttribute = xmlDocument.CreateAttribute("value");
-                valueAttribute.InnerText = d.ToString();
+                valueAttribute.InnerText = Cmax[i].ToString();
                 featureNode.Attributes.Append(idAttribute);
                 featureNode.Attributes.Append(valueAttribute);
                 realizationNode.AppendChild(featureNode);
 
                 featureNode = xmlDocument.CreateElement("Feature");
-            }
-
-            foreach (double d in T)
-            {
                 idAttribute = xmlDocument.CreateAttribute("id");
                 idAttribute.InnerText = "3";
-
                 valueAttribute = xmlDocument.CreateAttribute("value");
-                valueAttribute.InnerText = d.ToString();
+                valueAttribute.InnerText = T[i].ToString();
                 featureNode.Attributes.Append(idAttribute);
                 featureNode.Attributes.Append(valueAttribute);
                 realizationNode.AppendChild(featureNode);
 
-                featureNode = xmlDocument.CreateElement("Feature");
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < ampList.Count; j++)
+                for (int j = 0; j < 10; j++)
                 {
+                    featureNode = xmlDocument.CreateElement("Feature");
                     idAttribute = xmlDocument.CreateAttribute("id");
-                    idAttribute.InnerText = (i + 4).ToString();
-
+                    idAttribute.InnerText = (j + 4).ToString();
                     valueAttribute = xmlDocument.CreateAttribute("value");
-                    valueAttribute.InnerText = ampList[j][i].ToString();
+                    valueAttribute.InnerText = ampList[i][j].ToString();
                     featureNode.Attributes.Append(idAttribute);
                     featureNode.Attributes.Append(valueAttribute);
                     realizationNode.AppendChild(featureNode);
-
-                    featureNode = xmlDocument.CreateElement("Feature");
                 }
+
+                featureNode = xmlDocument.CreateElement("Feature");
+                idAttribute = xmlDocument.CreateAttribute("id");
+                idAttribute.InnerText = "14";
+                valueAttribute = xmlDocument.CreateAttribute("value");
+                valueAttribute.InnerText = V[i].ToString();
+                featureNode.Attributes.Append(idAttribute);
+                featureNode.Attributes.Append(valueAttribute);
+                realizationNode.AppendChild(featureNode);
+
+                featureNode = xmlDocument.CreateElement("Feature");
+                idAttribute = xmlDocument.CreateAttribute("id");
+                idAttribute.InnerText = "15";
+                valueAttribute = xmlDocument.CreateAttribute("value");
+                valueAttribute.InnerText = energyList[i].ToString();
+                featureNode.Attributes.Append(idAttribute);
+                featureNode.Attributes.Append(valueAttribute);
+                realizationNode.AppendChild(featureNode);
+
+                classNode.AppendChild(realizationNode);
             }
 
             #endregion
 
-            realizationsNode.AppendChild(realizationNode);
-            classNode.AppendChild(realizationsNode);
-            featuresValueNode.AppendChild(classNode);
+            featuresNode.AppendChild(classNode);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {

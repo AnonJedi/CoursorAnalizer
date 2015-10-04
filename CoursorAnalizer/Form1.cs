@@ -40,6 +40,8 @@ namespace CoursorAnalizer
             }
 
             timer = DateTime.Now;
+            Vector.timeList.Add(timer);
+
             if (counter == 0)
             {
                 Time = DateTime.Now;
@@ -60,14 +62,24 @@ namespace CoursorAnalizer
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   
                 g = Graphics.FromImage(bitmap);
 
-                w = rand.Next(180) + 20;
-                x = rand.Next(pictureBox1.Size.Width - w);
-                y = rand.Next(pictureBox1.Size.Height - w);
+                while (true)
+                {
+                    var oldX = x;
+                    var oldY = y;
+
+                    w = rand.Next(180) + 20;
+                    x = rand.Next(pictureBox1.Size.Width - w);
+                    y = rand.Next(pictureBox1.Size.Height - w);
+                    
+                    var distance = Math.Sqrt(Math.Pow(oldX - x, 2) + Math.Pow(oldY - y, 2));
+                    
+                    if (distance >= 128) break;
+                }
 
                 g.FillRectangle(new SolidBrush(Color.BlueViolet), x, y, w, w);
                 pictureBox1.Image = bitmap;
                 isStarted = true;
-                Vector.SaverParam(w, x, y, counter);
+                Vector.SaverParam(w, x, y, counter, Vector.Sec[Vector.Sec.Count - 1]);
                 counter++;
             }
           
@@ -100,7 +112,7 @@ namespace CoursorAnalizer
 
                 Vector.MathExpectation(counter);
                 Vector.Variance(counter);
-                Saver.SaveXML(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.Len);
+                Saver.SaveXML(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.V, Vector.energyList);
                 outTextBox.Text = Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT, Vector.ampM, Vector.ampD, Vector.allAmp);
                 Saver.SaveTXT(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.energyList);
                 counter = 0;

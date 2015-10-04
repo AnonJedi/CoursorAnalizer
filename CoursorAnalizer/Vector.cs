@@ -20,7 +20,7 @@ namespace CoursorAnalizer
        public static List<double> Len;//расстояние между центрами
        private static List<double> distance = new List<double>();//длинна траектории
        public static List<DateTime> Sec;//время
-       private static double V;//средняя скорость
+       private static double midV;//средняя скорость
        public static List<double> T;//формула
        public static double mT;
        public static double mCmax;
@@ -34,7 +34,9 @@ namespace CoursorAnalizer
        public static float[] ampM;
        public static float[] ampD;
        public static float[] allAmp;
-       public static List<double> energyList = new List<double>(); 
+       public static List<double> energyList = new List<double>();
+       public static List<DateTime> timeList;
+       public static List<double> V = new List<double>();
  
        #endregion
 
@@ -58,7 +60,7 @@ namespace CoursorAnalizer
 
                for (int i = 0; i < Len.Count; i++)
                {
-                   T.Add(V * Math.Log(Len[i] / Size[i] + 1, 2));
+                   T.Add(midV * Math.Log(Len[i] / Size[i] + 1, 2));
                    mT += T[i];
                    mCmax += Cmax[i];
                }
@@ -161,102 +163,93 @@ namespace CoursorAnalizer
                {
                    temp += Math.Sqrt(Math.Pow(Glist[i].X - Glist[i - 1].X, 2)) + Math.Sqrt(Math.Pow(Glist[i].Y - Glist[i-1].Y, 2));
                }
-               V = temp * 10000000 / t.Ticks;              
+               midV = temp * 10000000 / t.Ticks;              
            }
            
        }
 
-       public static void SaverParam(int w, int x, int y, int counter)
+       public static void SaverParam(int w, int x, int y, int counter, DateTime time)
        {
            double A, C;
            if (counter > 0)
            {
-               Len.Add(Math.Sqrt(Math.Pow(x + w/2 - Coord.X + w/2, 2)) + Math.Sqrt(Math.Pow(y + w/2 - Coord.Y + w/2, 2)));
-               Size.Add(w);
-               Cmid.Add(0);
-             
-               A = (y + w/2 - Coord.Y - w/2)/(x - Coord.X - x/2);
-               C = Coord.Y - A*(Coord.Y + w/2);
-
-               if (CordList[counter-1].Count < 64)
+               try
                {
-                   foreach (Point p in CordList[counter-1])
-                   {
-                       CList.Add(Math.Abs(A*p.X + p.Y + C)/Math.Sqrt(A*A+1));
-                       Cmid[Cmid.Count - 1] += CList[CList.Count - 1];
-                   }
-                   Cmid[Cmid.Count - 1] = Cmid[Cmid.Count - 1]/CList.Count;
-
-                   for (int i = 1; i < CordList[counter - 1].Count; i++)
-                   {
-                       distance.Add(Math.Sqrt(Math.Pow(CordList[counter - 1][i].X - CordList[counter - 1][i - 1].X, 2)) + Math.Sqrt(Math.Pow(CordList[counter - 1][i].Y - CordList[counter - 1][i - 1].Y, 2)));
-                   }
+                   A = (y + w / 2 - Coord.Y - w / 2) / (x - Coord.X - x / 2);
+                   C = Coord.Y - A * (Coord.Y + w / 2);
                }
-               else
+               catch (Exception e)
                {
-                   for (int i = 0; i < CordList[counter-1].Count;)
+                   A = 0;
+                   C = Coord.Y - A * (Coord.Y + w / 2);
+               }
+               
+               if (CordList[counter - 1].Count >= 128)
+               {
+                   Len.Add(Math.Sqrt(Math.Pow(x + w / 2 - Coord.X + w / 2, 2)) + Math.Sqrt(Math.Pow(y + w / 2 - Coord.Y + w / 2, 2)));
+                   Size.Add(w);
+                   Cmid.Add(0);
+
+                   for (int i = 0; i < CordList[counter - 1].Count; )
                    {
                        CList.Add(Math.Abs(A * CordList[counter - 1][i].X + CordList[counter - 1][i].Y + C) / Math.Sqrt(A * A + 1));
-                       i += (int)(CordList[counter - 1].Count/64);
+                       i += (int)(CordList[counter - 1].Count / 64);
                        Cmid[Cmid.Count - 1] += CList[CList.Count - 1];
                    }
-                   Cmid[Cmid.Count - 1] = Cmid[Cmid.Count - 1] / CList.Count;
+                   Cmid[Cmid.Count - 1] = Cmid[Cmid.Count - 1] / CList.Count / Len[Len.Count - 1];
 
-                   for (int i = 64; i < CordList[counter - 1].Count; i+=64)
+                   for (int i = 64; i < CordList[counter - 1].Count; i += 64)
                    {
                        distance.Add(Math.Sqrt(Math.Pow(CordList[counter - 1][i].X - CordList[counter - 1][i - 64].X, 2)) + Math.Sqrt(Math.Pow(CordList[counter - 1][i].Y - CordList[counter - 1][i - 64].Y, 2)));
                    }
                }
+               else return;
 
                double max = CList[0];
-               foreach (double d in CList) if (d > max) max = d;              
+               foreach (double d in CList) if (d > max) max = d;
 
-               Cmax.Add(max);
+               Cmax.Add(max / Len[Len.Count - 1]);
 
-               int n = 0;
+               int n = 128;
+               double temp = 0;
 
-               if (distance.Count >= 32 && distance.Count < 64) n = 64;
-               else if (distance.Count >= 64 && distance.Count < 128) n = 128;
+               float[] ar = new float[n];
+               float[] ai = new float[n];
+               float[] amp;
 
-               if (n != 0)
+               for (int i = 0; i < n; i++)
                {
-                   float[] ar = new float[n];
-                   float[] ai = new float[n];
-                   float[] amp;
-
-                   for (int i = 0; i < n; i++)
-                   {
-                       if (i < distance.Count) ar[i] = (float)distance[i];
-                       else ar[i] = 0;
-                       ai[i] = 0;
-                   }
-
-                   FFT.complexToComplex(-1, distance.Count, ar, ai);
-
-                   for (int i = 0; i < distance.Count; i++)
-                   {
-                       ar[ar.Length - i - 1] = ar[ar.Length - i - 1] - ar[i];
-                       ai[ai.Length - i - 1] = ai[ai.Length - i - 1] + ai[i];
-                   }
-
-                   double energy = 0;
-
-                   float[] am = new float[distance.Count];
-
-                   for (int i = 0; i < am.Length; i++)
-                   {
-                       am[i] = ((ar[i] * ar[i] + ai[i] * ai[i]) / am.Length);
-                       energy += am[i];
-                   }
-
-                   energyList.Add(energy);
-                   amp = new float[distance.Count];
-
-                   for (int i = 0; i < distance.Count; i++) amp[i] = am[i] / (float)energy;                 
-
-                   ampList.Add(amp);
+                   if (i < distance.Count) ar[i] = (float)distance[i];
+                   else ar[i] = 0;
+                   ai[i] = 0;
                }
+
+               FFT.complexToComplex(-1, n, ar, ai);
+
+               float[] am = new float[n];
+               double energy = 0;
+               for (int i = 0; i < n; i++)
+               {
+                   ar[ar.Length - i - 1] = ar[ar.Length - i - 1] - ar[i];
+                   ai[ai.Length - i - 1] = ai[ai.Length - i - 1] + ai[i];
+                   am[i] = ((ar[i] * ar[i] + ai[i] * ai[i]) / am.Length);
+               }
+
+               for (int i = 0; i < distance.Count; i++)
+               {
+                   temp += distance[i];
+                   energy += Math.Pow(distance[i], 2); 
+               }
+
+               energyList.Add(energy);
+
+               amp = new float[n];
+
+               for (int i = 0; i < n; i++) amp[i] = am[i] / (float)energy;                 
+
+               ampList.Add(amp);
                
+               V.Add(temp * 10000000 / time.Ticks / Len[Len.Count - 1]);
                discCList.Add(CList);
                CList = new List<double>();
            }
@@ -286,6 +279,8 @@ namespace CoursorAnalizer
            Cmax = new List<double>();
            Cmid = new List<double>();
            energyList = new List<double>();
+           timeList = new List<DateTime>();
+           V = new List<double>();
        }
     }
 }
