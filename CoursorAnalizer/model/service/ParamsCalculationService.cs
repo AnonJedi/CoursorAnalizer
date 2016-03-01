@@ -191,10 +191,31 @@ namespace CoursorAnalizer
 
         //
         public static float[] allAmp;
-        public static List<double> energyList = new List<double>();
-        public static List<DateTime> timeList;
-        public static List<double> V = new List<double>();
- 
+
+        //контейнер вычисленной энергии движения мыши
+        private List<double> energyContainer;
+        public List<double> EnergyContainer
+        {
+            get { return energyContainer; }
+            set { energyContainer = value; }
+        }
+
+        //контейнер времён
+        private List<DateTime> timeContainer;
+        public List<DateTime> TimeContainer
+        {
+            get { return timeContainer; }
+            set { timeContainer = value; }
+        }
+
+        //текущая скорость движения мыши
+        private List<double> mouseSpeed;
+        public List<double> MouseSpeed
+        {
+            get { return mouseSpeed; }
+            set { mouseSpeed = value; }
+        }
+
         #endregion
 
         public static void ReadBase()
@@ -418,7 +439,7 @@ namespace CoursorAnalizer
                     energy += Math.Pow(distanceLen[i], 2); 
                 }
 
-                energyList.Add(energy);
+                EnergyContainer.Add(energy);
 
                 amp = new float[n];
 
@@ -426,7 +447,7 @@ namespace CoursorAnalizer
 
                 ampContainer.Add(amp);
                
-                V.Add(temp * 10000000 / time.Ticks / lensContainer[lensContainer.Count - 1]);
+                mouseSpeed.Add(temp * 10000000 / time.Ticks / lensContainer[lensContainer.Count - 1]);
                 tracksDiffContainer.Add(diffContainer);
                 diffContainer = new List<double>();
             }
@@ -447,16 +468,16 @@ namespace CoursorAnalizer
         public void Refresher()
        {
            MouseTrack = new List<Point>();
-           shapeSize = new List<double>();
-           lensContainer = new List<double>();
-           clickTimeContainer = new List<DateTime>();
-           t = new List<double>();
-           ampContainer = new List<float[]>();
-           maxDiffTracks = new List<double>();
-           Cmid = new List<double>();
-           energyList = new List<double>();
-           timeList = new List<DateTime>();
-           V = new List<double>();
+           ShapeSize = new List<double>();
+           LensContainer = new List<double>();
+           ClickTimeContainer = new List<DateTime>();
+           T = new List<double>();
+           AmpContainer = new List<float[]>();
+           MaxDiffTracks = new List<double>();
+           MidDiffTracks = new List<double>();
+           EnergyContainer = new List<double>();
+           TimeContainer = new List<DateTime>();
+           MouseSpeed = new List<double>();
        }
     }
 }

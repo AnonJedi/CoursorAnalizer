@@ -26,7 +26,6 @@ namespace CoursorAnalizer
 
         public Analizer()
         {
-         
             InitializeComponent();
         }
         #endregion
@@ -40,7 +39,7 @@ namespace CoursorAnalizer
             }
 
             timer = DateTime.Now;
-            Vector.timeList.Add(timer);
+            ParamsCalculationService.timeList.Add(timer);
 
             if (counter == 0)
             {
@@ -48,15 +47,15 @@ namespace CoursorAnalizer
             }
             else if (counter > 0)
             {
-                Vector.mouseTracksContainer.Add(Vector.MouseTrack);
-                Vector.RefreshList(Vector.MouseTrack);
+                ParamsCalculationService.mouseTracksContainer.Add(ParamsCalculationService.MouseTrack);
+                ParamsCalculationService.RefreshList(ParamsCalculationService.MouseTrack);
             }
 
             if (!isStarted && (counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
             {
                 counterLbl.Text = (counter).ToString();
                 oldtime = new DateTime(timer.Ticks - oldtime.Ticks);
-                Vector.Sec.Add(oldtime);
+                ParamsCalculationService.Sec.Add(oldtime);
                 oldtime = timer;
 
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   
@@ -79,7 +78,7 @@ namespace CoursorAnalizer
                 g.FillRectangle(new SolidBrush(Color.BlueViolet), x, y, w, w);
                 pictureBox1.Image = bitmap;
                 isStarted = true;
-                Vector.SaverParam(w, x, y, counter, Vector.Sec[Vector.Sec.Count - 1]);
+                ParamsCalculationService.SaverParam(w, x, y, counter, ParamsCalculationService.Sec[ParamsCalculationService.Sec.Count - 1]);
                 counter++;
             }
           
@@ -106,15 +105,15 @@ namespace CoursorAnalizer
                 if (counter > 1)
                 {
                     Time = new DateTime(timer.Ticks - Time.Ticks);
-                    Vector.MidV(Time, counter);
+                    ParamsCalculationService.MidV(Time, counter);
                 }
-                else Vector.MidV(timer, counter);
+                else ParamsCalculationService.MidV(timer, counter);
 
-                Vector.MathExpectation(counter);
-                Vector.Variance(counter);
-                Saver.SaveXML(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.V, Vector.energyList);
-                outTextBox.Text = Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT, Vector.ampExpiration, Vector.ampD, Vector.allAmp);
-                Saver.SaveTXT(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.energyList);
+                ParamsCalculationService.MathExpectation(counter);
+                ParamsCalculationService.Variance(counter);
+                Saver.SaveXML(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.V, ParamsCalculationService.energyList);
+                outTextBox.Text = Saver.SaveTXT(Name, ParamsCalculationService.mCmid, ParamsCalculationService.mCmax, ParamsCalculationService.mT, ParamsCalculationService.dCmid, ParamsCalculationService.dCmax, ParamsCalculationService.dT, ParamsCalculationService.ampExpiration, ParamsCalculationService.ampD, ParamsCalculationService.allAmp);
+                Saver.SaveTXT(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.energyList);
                 counter = 0;
                 isReg = false;
                 isStarted = false;
@@ -125,7 +124,7 @@ namespace CoursorAnalizer
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (isStarted)
-                Vector.Trecker(e);
+                ParamsCalculationService.Trecker(e);
         }
 
         private void RegBtn_Click(object sender, EventArgs e)
@@ -133,16 +132,16 @@ namespace CoursorAnalizer
             if (!isReg)
             {
                 Name = nameTextBox.Text;
-                Vector.ReadBase();
+                ParamsCalculationService.ReadBase();
 
-                if (Vector.users.Contains(Name))
+                if (ParamsCalculationService.users.Contains(Name))
                 {
                     MessageBox.Show("This name alredy exist!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);                   
                     return;
                 }
 
                 counterLbl.Text = "0";
-                Vector.Refresher();
+                ParamsCalculationService.Refresher();
                 isReg = true;
                 nameTextBox.Text = "";
                 NameLbl.Text = Name + " in action!";
