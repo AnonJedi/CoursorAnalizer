@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
@@ -13,46 +12,8 @@ namespace CoursorAnalizer
         private static XmlDocument xmlDocument;
         private static XmlNode root;
         private static string file = "DataBase.xml";
-        private static List<string> users;
 
         #endregion
-
-        public static List<string> ReadDB()
-        {
-            using (FileStream fileStream = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                DBBytes = new byte[fileStream.Length];
-                fileStream.Read(DBBytes, 0, DBBytes.Length);
-            }
-
-            using (MemoryStream memoryStream = new MemoryStream(DBBytes))
-            {               
-                xmlDocument = new XmlDocument();
-                xmlDocument.Load(memoryStream);
-            }
-
-            try
-            {
-                return Parse();
-            }
-            catch (Exception)
-            {
-                return new List<string>();
-            }
-            
-        }
-
-        private static List<string> Parse()
-        {
-            users = new List<string>();
-            root = xmlDocument.DocumentElement;
-            XmlNode featuresNode = root.SelectSingleNode("descendant::Features");
-            foreach (XmlNode node in featuresNode.SelectNodes("Class"))
-            {
-                users.Add(node.Attributes.GetNamedItem("name").Value);
-            }
-            return users;
-        }
 
         public static void SaveXML(string name, List<double> Cmid, List<double> Cmax, List<double> T, List<float[]> ampList, List<double> V, List<double> energyList)
         {

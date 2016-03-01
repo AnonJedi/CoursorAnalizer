@@ -8,15 +8,15 @@ namespace CoursorAnalizer
     {
         #region Var
 
-        private Random rand = new Random(); //рандомчик для координат кнопки
-        private int x=0, y=0, w=0;  //координаты кнопки и её размеры
-        private Bitmap bitmap;   //холст
-        private Graphics g;  //переменная для рисования
-        private bool isStarted = false;  //проверка на нажатие кнопки старт
-        private int counter = 0;//счетчик
-        private DateTime timer;//время начала цикла
-        private DateTime oldtime=new DateTime();//время предыдущего цикла
-        private DateTime Time;//время работы программы
+        private Random random = new Random(); //генератор рандомных чисел для генерации позиции и размера фигуры
+        private int x, y, w;  //координаты кнопки и её размер
+        private Bitmap bitmap;   //место отрисовки интерфейса
+        private Graphics g;  //обект графики
+        private bool isStarted = false;  //флаг нажатия кнопки старт
+        private int counter = 0; //счетчик кликнутых фигур
+        private DateTime currentClickTime; //время с начала клика
+        private DateTime previousClickTime; //время предыдущего клика
+        private DateTime allWorkingTime; //время теста
         private string Name;
         private bool isReg = false;
     
@@ -38,12 +38,12 @@ namespace CoursorAnalizer
                 return;
             }
 
-            timer = DateTime.Now;
-            ParamsCalculationService.timeList.Add(timer);
+            currentClickTime = DateTime.Now;
+            ParamsCalculationService.timeList.Add(currentClickTime);
 
             if (counter == 0)
             {
-                Time = DateTime.Now;
+                allWorkingTime = DateTime.Now;
             }
             else if (counter > 0)
             {
@@ -54,9 +54,9 @@ namespace CoursorAnalizer
             if (!isStarted && (counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
             {
                 counterLbl.Text = (counter).ToString();
-                oldtime = new DateTime(timer.Ticks - oldtime.Ticks);
-                ParamsCalculationService.Sec.Add(oldtime);
-                oldtime = timer;
+                previousClickTime = new DateTime(currentClickTime.Ticks - previousClickTime.Ticks);
+                ParamsCalculationService.Sec.Add(previousClickTime);
+                previousClickTime = currentClickTime;
 
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   
                 g = Graphics.FromImage(bitmap);
@@ -66,9 +66,9 @@ namespace CoursorAnalizer
                     var oldX = x;
                     var oldY = y;
 
-                    w = rand.Next(180) + 20;
-                    x = rand.Next(pictureBox1.Size.Width - w);
-                    y = rand.Next(pictureBox1.Size.Height - w);
+                    w = random.Next(180) + 20;
+                    x = random.Next(pictureBox1.Size.Width - w);
+                    y = random.Next(pictureBox1.Size.Height - w);
                     
                     var distance = Math.Sqrt(Math.Pow(oldX - x, 2) + Math.Pow(oldY - y, 2));
                     
@@ -104,10 +104,10 @@ namespace CoursorAnalizer
 
                 if (counter > 1)
                 {
-                    Time = new DateTime(timer.Ticks - Time.Ticks);
-                    ParamsCalculationService.MidV(Time, counter);
+                    allWorkingTime = new DateTime(currentClickTime.Ticks - allWorkingTime.Ticks);
+                    ParamsCalculationService.MidV(allWorkingTime, counter);
                 }
-                else ParamsCalculationService.MidV(timer, counter);
+                else ParamsCalculationService.MidV(currentClickTime, counter);
 
                 ParamsCalculationService.MathExpectation(counter);
                 ParamsCalculationService.Variance(counter);
