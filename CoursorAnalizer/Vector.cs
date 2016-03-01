@@ -6,82 +6,239 @@ using System.Drawing;
 
 namespace CoursorAnalizer
 {
-   static class Vector
-   {
-       #region Var
+    public class Vector
+    {
+        #region Var
 
-       private static Point Coord = new Point();//коорд.
-       public static List<Point> Glist;//траектория мышки
-       public static List<List<Point>> CordList = new List<List<Point>>();
-       private static List<List<double>> discCList = new List<List<double>>(); 
-       public static List<double> Cmax = new List<double>(); 
-       public static List<double> Cmid = new List<double>();
-       private static List<double> Size;//размер куба
-       public static List<double> Len;//расстояние между центрами
-       private static List<double> distance = new List<double>();//длинна траектории
-       public static List<DateTime> Sec;//время
-       private static double midV;//средняя скорость
-       public static List<double> T;//формула
-       public static double mT;
-       public static double mCmax;
-       public static double mCmid;
-       public static double dT;
-       public static double dCmid;
-       public static double dCmax;
-       public static List<string> users;//список пользователей
-       private static List<double> CList = new List<double>(); 
-       public static List<float[]> ampList;
-       public static float[] ampM;
-       public static float[] ampD;
-       public static float[] allAmp;
-       public static List<double> energyList = new List<double>();
-       public static List<DateTime> timeList;
-       public static List<double> V = new List<double>();
+        //текущие координаты мыши
+        private Point mousePoint;
+        public Point MousePoint
+        {
+            get { return mousePoint; }
+            set { mousePoint = value; }
+        }
+
+        //траектория мышки
+        private List<Point> mouseTrack;
+        public List<Point> MouseTrack
+        {
+            get { return mouseTrack; }
+            set { mouseTrack = value; }
+        }
+
+        //хранилище траекторий мыши
+        private List<List<Point>> mouseTracksContainer;
+        public List<List<Point>> MouseTracksContainer
+        {
+            get { return mouseTracksContainer; }
+            set { mouseTracksContainer = value; }
+        }
+
+        //хранилище текущего параметра C
+        private List<List<double>> tracksDiffContainer;
+        public List<List<double>> TracksDiffContainer
+        {
+            get { return tracksDiffContainer; }
+            set { tracksDiffContainer = value; }
+        }
+
+        //хранилище максимальных отклонений траекторий
+        private List<double> maxDiffTracks;
+        public List<double> MaxDiffTracks
+        {
+            get { return maxDiffTracks; }
+            set { maxDiffTracks = value; }
+        }
+
+        //хранилище средних отклонений траекторий
+        private List<double> midDiffTracks;
+        public List<double> MidDiffTracks
+        {
+            get { return midDiffTracks; }
+            set { midDiffTracks = value; }
+        }
+
+        //размер стороны куба
+        private List<double> shapeSize;
+        public List<double> ShapeSize
+        {
+            get { return shapeSize; }
+            set { shapeSize = value; }
+        }
+
+        //хранилище расстояний между центрами фигур
+        private List<double> lensContainer;
+        public List<double> LensContainer
+        {
+            get { return lensContainer; }
+            set { lensContainer = value; }
+        }
+
+        //длинна траектории мыши
+        private List<double> distanceLen;
+        public List<double> DistanceLen
+        {
+            get { return distanceLen; }
+            set { distanceLen = value; }
+        }
+
+        //хранилище времён между кликами
+        private List<DateTime> clickTimeContainer;
+        public List<DateTime> ClickTimeContainer
+        {
+            get { return clickTimeContainer; }
+            set { clickTimeContainer = value; }
+        }
+
+        //средняя скорость движения мыши
+        private double midMouseSpeed;
+        public double MidMouseSpeed
+        {
+            get { return midMouseSpeed; }
+            set { midMouseSpeed = value; }
+        }
+
+        //хранилище Т
+        private List<double> t;
+        public List<double> T
+        {
+            get { return t; }
+            set { t = value; }
+        }
+
+        //математическое ожидание значений Т
+        private double expirationT;
+        public double ExpirationT
+        {
+            get { return expirationT; }
+            set { expirationT = value; }
+        }
+
+        //математическое ожидание максимальных отклонений траектории мыши от идеальной траектории
+        private double maxDiffTracksExpiration;
+        public double MaxDiffTracksExpiration
+        {
+            get { return maxDiffTracksExpiration; }
+            set { maxDiffTracksExpiration = value; }
+        }
+
+        //математическое ожидание средних отклонений траектории мыши от идеальной траектории
+        private double midDiffTracksExpiration;
+        public double MidDiffTracksExpiration
+        {
+            get { return midDiffTracksExpiration; }
+            set { midDiffTracksExpiration = value; }
+        }
+
+        //среднеквадратичное отклонение параметра T
+        private double tDispertion;
+        public double TDispertion
+        {
+            get { return tDispertion; }
+            set { tDispertion = value; }
+        }
+
+        //среднеквадратичное отклонение среднего отклонения траекторий
+        private double midDiffTracksDispertion;
+        public double MidDiffTracksDispertion
+        {
+            get { return midDiffTracksDispertion; }
+            set { midDiffTracksDispertion = value; }
+        }
+
+        //среднеквадратичное отклонение максимального отклонения траекторий
+        private double maxDiffTracksDispersion;
+        public double MaxDiffTracksDispersion
+        {
+            get { return maxDiffTracksDispersion; }
+            set { maxDiffTracksDispersion = value; }
+        }
+
+        // TODO: перетащить в локальную облость
+        public static List<string> users;
+
+        //хранилище отклонений координаты мыши от идеальной координаты
+        private List<double> diffContainer;
+        public List<double> DiffContainer
+        {
+            get { return diffContainer; }
+            set { diffContainer = value; }
+        }
+
+        //хранилище амплитуд ряда распределения отклонений мыши
+        private List<float[]> ampContainer;
+        public List<float[]> AmpContainer
+        {
+            get { return ampContainer; }
+            set { ampContainer = value; }
+        }
+
+        //математическое ожидание амплитуд отклонения
+        private float[] ampExpiration;
+        public float[] AmpExpiration
+        {
+            get { return ampExpiration; }
+            set { ampExpiration = value; }
+        }
+
+        //дисперсия амплитуд отклонения
+        private float[] ampDispertion;
+        public float[] AmpDispertion
+        {
+            get { return ampDispertion; }
+            set { ampDispertion = value; }
+        }
+
+        //
+        public static float[] allAmp;
+        public static List<double> energyList = new List<double>();
+        public static List<DateTime> timeList;
+        public static List<double> V = new List<double>();
  
-       #endregion
+        #endregion
 
-       public static void ReadBase()
-       {
+        public static void ReadBase()
+        {
             users = Saver.ReadDB();
-       }
+        }
 
-       public static void MathExpectation(int counter)
+        public void MathExpectation(int counter)
        {
            if (counter > 0)
            {
-               mT = 0;
-               mCmax = 0;
-               mCmid = 0;
-               ampM = new float[10];
+               expirationT = 0;
+               maxDiffTracksExpiration = 0;
+               midDiffTracksExpiration = 0;
+               ampExpiration = new float[10];
                allAmp = new float[2];
                allAmp[0] = 0;
                allAmp[1] = 0;
-               for (int i = 0; i < 10; i++) ampM[i] = 0;
+               for (int i = 0; i < 10; i++) ampExpiration[i] = 0;
 
-               for (int i = 0; i < Len.Count; i++)
+               for (int i = 0; i < lensContainer.Count; i++)
                {
-                   T.Add(midV * Math.Log(Len[i] / Size[i] + 1, 2));
-                   mT += T[i];
-                   mCmax += Cmax[i];
+                   t.Add(midMouseSpeed * Math.Log(lensContainer[i] / shapeSize[i] + 1, 2));
+                   expirationT += t[i];
+                   maxDiffTracksExpiration += maxDiffTracks[i];
                }
 
-               foreach (double d in Cmid) mCmid += d;
-               foreach (float[] floats in ampList)
+               foreach (double d in MidDiffTracks) midDiffTracksExpiration += d;
+               foreach (float[] floats in ampContainer)
                {
-                   ampM[0] += floats[0];
-                   ampM[1] += floats[1];
-                   ampM[2] += floats[2];
-                   ampM[3] += floats[3];
-                   ampM[4] += floats[4];
-                   ampM[5] += floats[5];
-                   ampM[6] += floats[6];
-                   ampM[7] += floats[7];
-                   ampM[8] += floats[8];
-                   ampM[9] += floats[9];
+                   ampExpiration[0] += floats[0];
+                   ampExpiration[1] += floats[1];
+                   ampExpiration[2] += floats[2];
+                   ampExpiration[3] += floats[3];
+                   ampExpiration[4] += floats[4];
+                   ampExpiration[5] += floats[5];
+                   ampExpiration[6] += floats[6];
+                   ampExpiration[7] += floats[7];
+                   ampExpiration[8] += floats[8];
+                   ampExpiration[9] += floats[9];
                }
 
                var count = 0;
-               foreach (float[] floats in ampList)
+               foreach (float[] floats in ampContainer)
                {
                    foreach (float f in floats)
                    {
@@ -91,38 +248,40 @@ namespace CoursorAnalizer
                }
                allAmp[0] = allAmp[0]/count;
 
-               mT = mT/Len.Count;
-               mCmax = mCmax/Len.Count;
-               mCmid = mCmid/Cmid.Count;
+               expirationT = expirationT/lensContainer.Count;
+               maxDiffTracksExpiration = maxDiffTracksExpiration/lensContainer.Count;
+               midDiffTracksExpiration = midDiffTracksExpiration / MidDiffTracks.Count;
 
-               for (int i = 0; i < 10; i++) ampM[i] = ampM[i]/ampList.Count;
+               for (int i = 0; i < 10; i++) ampExpiration[i] = ampExpiration[i]/ampContainer.Count;
            }      
        }
 
-       public static void Variance(int counter)
+        public void Variance(int counter)
        {
            if (counter > 0)
            {
-               dCmid = 0;
-               for (int i = 1; i < Cmid.Count; i++)
+               midDiffTracksDispertion = 0;
+               for (int i = 1; i < MidDiffTracks.Count; i++)
                {
-                   dCmid = Math.Sqrt((i - 1) * dCmid * dCmid / i + Math.Pow(Cmid[i] - mCmid, 2));
+                   midDiffTracksDispertion = Math.Sqrt((i - 1) * midDiffTracksDispertion * midDiffTracksDispertion
+                       / i + Math.Pow(MidDiffTracks[i] - midDiffTracksExpiration, 2));
                }
 
-               dCmax = 0;          
-               for (int i = 1; i < Cmax.Count; i++)
+               maxDiffTracksDispersion = 0;          
+               for (int i = 1; i < maxDiffTracks.Count; i++)
                {
-                   dCmax = Math.Sqrt((i - 1) * dCmax * dCmax / i + Math.Pow(Cmax[i] - mCmax, 2));
+                   maxDiffTracksDispersion = Math.Sqrt((i - 1) * maxDiffTracksDispersion * maxDiffTracksDispersion
+                       / i + Math.Pow(maxDiffTracks[i] - maxDiffTracksExpiration, 2));
                }
 
-               dT = 0;              
-               for (int i = 1; i < T.Count; i++)
+               tDispertion = 0;              
+               for (int i = 1; i < t.Count; i++)
                {
-                   dT = Math.Sqrt((i - 1) * dT * dT / i + Math.Pow(T[i] - mT, 2));
+                   tDispertion = Math.Sqrt((i - 1) * tDispertion * tDispertion / i + Math.Pow(t[i] - expirationT, 2));
                }
 
                List<float> temp = new List<float>();
-               foreach (float[] floats in ampList)
+               foreach (float[] floats in ampContainer)
                {
                    foreach (float f in floats)
                    {
@@ -135,148 +294,165 @@ namespace CoursorAnalizer
                    allAmp[1] = (float)Math.Sqrt((i - 1) * allAmp[1] * allAmp[1] / i + Math.Pow(temp[i] - allAmp[0], 2));                   
                }
 
-               ampD = new float[10];
-               for (int i = 0; i < 10; i++) ampD[i] = 0;
+               ampDispertion = new float[10];
+               for (int i = 0; i < 10; i++) ampDispertion[i] = 0;
 
-               for (int i = 1; i < ampList.Count; i++)
+               for (int i = 1; i < ampContainer.Count; i++)
                {
-                   ampD[0] = (float)Math.Sqrt((i - 1) * ampD[0] * ampD[0] / i + Math.Pow(ampList[i][0] - ampM[0], 2));
-                   ampD[1] = (float)Math.Sqrt((i - 1) * ampD[1] * ampD[1] / i + Math.Pow(ampList[i][1] - ampM[1], 2));
-                   ampD[2] = (float)Math.Sqrt((i - 1) * ampD[2] * ampD[2] / i + Math.Pow(ampList[i][2] - ampM[2], 2));
-                   ampD[3] = (float)Math.Sqrt((i - 1) * ampD[3] * ampD[3] / i + Math.Pow(ampList[i][3] - ampM[3], 2));
-                   ampD[4] = (float)Math.Sqrt((i - 1) * ampD[4] * ampD[4] / i + Math.Pow(ampList[i][4] - ampM[4], 2));
-                   ampD[5] = (float)Math.Sqrt((i - 1) * ampD[5] * ampD[5] / i + Math.Pow(ampList[i][5] - ampM[5], 2));
-                   ampD[6] = (float)Math.Sqrt((i - 1) * ampD[6] * ampD[6] / i + Math.Pow(ampList[i][6] - ampM[6], 2));
-                   ampD[7] = (float)Math.Sqrt((i - 1) * ampD[7] * ampD[7] / i + Math.Pow(ampList[i][7] - ampM[7], 2));
-                   ampD[8] = (float)Math.Sqrt((i - 1) * ampD[8] * ampD[8] / i + Math.Pow(ampList[i][8] - ampM[8], 2));
-                   ampD[9] = (float)Math.Sqrt((i - 1) * ampD[9] * ampD[9] / i + Math.Pow(ampList[i][9] - ampM[9], 2));
+                   ampDispertion[0] = (float)Math.Sqrt((i - 1) * ampDispertion[0] * ampDispertion[0]
+                       / i + Math.Pow(ampContainer[i][0] - ampExpiration[0], 2));
+                   ampDispertion[1] = (float)Math.Sqrt((i - 1) * ampDispertion[1] * ampDispertion[1]
+                       / i + Math.Pow(ampContainer[i][1] - ampExpiration[1], 2));
+                   ampDispertion[2] = (float)Math.Sqrt((i - 1) * ampDispertion[2] * ampDispertion[2] 
+                       / i + Math.Pow(ampContainer[i][2] - ampExpiration[2], 2));
+                   ampDispertion[3] = (float)Math.Sqrt((i - 1) * ampDispertion[3] * ampDispertion[3] 
+                       / i + Math.Pow(ampContainer[i][3] - ampExpiration[3], 2));
+                   ampDispertion[4] = (float)Math.Sqrt((i - 1) * ampDispertion[4] * ampDispertion[4] 
+                       / i + Math.Pow(ampContainer[i][4] - ampExpiration[4], 2));
+                   ampDispertion[5] = (float)Math.Sqrt((i - 1) * ampDispertion[5] * ampDispertion[5]
+                       / i + Math.Pow(ampContainer[i][5] - ampExpiration[5], 2));
+                   ampDispertion[6] = (float)Math.Sqrt((i - 1) * ampDispertion[6] * ampDispertion[6]
+                       / i + Math.Pow(ampContainer[i][6] - ampExpiration[6], 2));
+                   ampDispertion[7] = (float)Math.Sqrt((i - 1) * ampDispertion[7] * ampDispertion[7] 
+                       / i + Math.Pow(ampContainer[i][7] - ampExpiration[7], 2));
+                   ampDispertion[8] = (float)Math.Sqrt((i - 1) * ampDispertion[8] * ampDispertion[8]
+                       / i + Math.Pow(ampContainer[i][8] - ampExpiration[8], 2));
+                   ampDispertion[9] = (float)Math.Sqrt((i - 1) * ampDispertion[9] * ampDispertion[9]
+                       / i + Math.Pow(ampContainer[i][9] - ampExpiration[9], 2));
                }
            }
        }
 
-       public static void MidV(DateTime t, int counter)
+        public void MidV(DateTime t, int counter)
        {         
            if (counter > 0)
            {
                double temp = 0;
-               for (int i = 1; i < Glist.Count; i++)
+               for (int i = 1; i < MouseTrack.Count; i++)
                {
-                   temp += Math.Sqrt(Math.Pow(Glist[i].X - Glist[i - 1].X, 2)) + Math.Sqrt(Math.Pow(Glist[i].Y - Glist[i-1].Y, 2));
+                   temp += Math.Sqrt(Math.Pow(MouseTrack[i].X - MouseTrack[i - 1].X, 2)) 
+                       + Math.Sqrt(Math.Pow(MouseTrack[i].Y - MouseTrack[i-1].Y, 2));
                }
-               midV = temp * 10000000 / t.Ticks;              
+               midMouseSpeed = temp * 10000000 / t.Ticks;              
            }
            
        }
 
-       public static void SaverParam(int w, int x, int y, int counter, DateTime time)
+        public void SaverParam(int w, int x, int y, int counter, DateTime time)
+        {
+            if (counter > 0)
+            {
+                double a;
+                double C;
+                try
+                {
+                    a = (y + w / 2 - mousePoint.Y - w / 2) / (x - mousePoint.X - x / 2);
+                    C = mousePoint.Y - a * (mousePoint.Y + w / 2);
+                }
+                catch (Exception e)
+                {
+                    a = 0;
+                    C = mousePoint.Y - a * (mousePoint.Y + w / 2);
+                }
+               
+                if (mouseTracksContainer[counter - 1].Count >= 128)
+                {
+                    lensContainer.Add(Math.Sqrt(Math.Pow(x + w / 2 - mousePoint.X + w / 2, 2)) 
+                        + Math.Sqrt(Math.Pow(y + w / 2 - mousePoint.Y + w / 2, 2)));
+                    shapeSize.Add(w);
+                    MidDiffTracks.Add(0);
+
+                    for (int i = 0; i < mouseTracksContainer[counter - 1].Count; )
+                    {
+                        diffContainer.Add(Math.Abs(a * mouseTracksContainer[counter - 1][i].X + 
+                            mouseTracksContainer[counter - 1][i].Y + C) / Math.Sqrt(a * a + 1));
+                        i += (int)(mouseTracksContainer[counter - 1].Count / 64);
+                        MidDiffTracks[MidDiffTracks.Count - 1] += diffContainer[diffContainer.Count - 1];
+                    }
+                    MidDiffTracks[MidDiffTracks.Count - 1] = MidDiffTracks[MidDiffTracks.Count - 1] / diffContainer.Count / 
+                        lensContainer[lensContainer.Count - 1];
+                    
+                    for (int i = 64; i < mouseTracksContainer[counter - 1].Count; i += 64)
+                    {
+                        distanceLen.Add(Math.Sqrt(Math.Pow(mouseTracksContainer[counter - 1][i].X - 
+                            mouseTracksContainer[counter - 1][i - 64].X, 2)) + 
+                            Math.Sqrt(Math.Pow(mouseTracksContainer[counter - 1][i].Y - 
+                            mouseTracksContainer[counter - 1][i - 64].Y, 2)));
+                    }
+                }
+                else return;
+
+                double max = diffContainer[0];
+                foreach (double d in diffContainer) if (d > max) max = d;
+                 
+                maxDiffTracks.Add(max / lensContainer[lensContainer.Count - 1]);
+                
+                int n = 128;
+                double temp = 0;
+                 
+                float[] ar = new float[n];
+                float[] ai = new float[n];
+                float[] amp;
+
+                for (int i = 0; i < n; i++)
+                {
+                    if (i < distanceLen.Count) ar[i] = (float)distanceLen[i];
+                    else ar[i] = 0;
+                    ai[i] = 0;
+                }
+
+                FFT.complexToComplex(-1, n, ar, ai);
+
+                float[] am = new float[n];
+                double energy = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    ar[ar.Length - i - 1] = ar[ar.Length - i - 1] - ar[i];
+                    ai[ai.Length - i - 1] = ai[ai.Length - i - 1] + ai[i];
+                    am[i] = ((ar[i] * ar[i] + ai[i] * ai[i]) / am.Length);
+                }
+
+                for (int i = 0; i < distanceLen.Count; i++)
+                {
+                    temp += distanceLen[i];
+                    energy += Math.Pow(distanceLen[i], 2); 
+                }
+
+                energyList.Add(energy);
+
+                amp = new float[n];
+
+                for (int i = 0; i < n; i++) amp[i] = am[i] / (float)energy;                 
+
+                ampContainer.Add(amp);
+               
+                V.Add(temp * 10000000 / time.Ticks / lensContainer[lensContainer.Count - 1]);
+                tracksDiffContainer.Add(diffContainer);
+                diffContainer = new List<double>();
+            }
+
+            this.MousePoint = new Point(x, y);
+        }
+
+        public void Trecker(MouseEventArgs e)
        {
-           double A, C;
-           if (counter > 0)
-           {
-               try
-               {
-                   A = (y + w / 2 - Coord.Y - w / 2) / (x - Coord.X - x / 2);
-                   C = Coord.Y - A * (Coord.Y + w / 2);
-               }
-               catch (Exception e)
-               {
-                   A = 0;
-                   C = Coord.Y - A * (Coord.Y + w / 2);
-               }
-               
-               if (CordList[counter - 1].Count >= 128)
-               {
-                   Len.Add(Math.Sqrt(Math.Pow(x + w / 2 - Coord.X + w / 2, 2)) + Math.Sqrt(Math.Pow(y + w / 2 - Coord.Y + w / 2, 2)));
-                   Size.Add(w);
-                   Cmid.Add(0);
-
-                   for (int i = 0; i < CordList[counter - 1].Count; )
-                   {
-                       CList.Add(Math.Abs(A * CordList[counter - 1][i].X + CordList[counter - 1][i].Y + C) / Math.Sqrt(A * A + 1));
-                       i += (int)(CordList[counter - 1].Count / 64);
-                       Cmid[Cmid.Count - 1] += CList[CList.Count - 1];
-                   }
-                   Cmid[Cmid.Count - 1] = Cmid[Cmid.Count - 1] / CList.Count / Len[Len.Count - 1];
-
-                   for (int i = 64; i < CordList[counter - 1].Count; i += 64)
-                   {
-                       distance.Add(Math.Sqrt(Math.Pow(CordList[counter - 1][i].X - CordList[counter - 1][i - 64].X, 2)) + Math.Sqrt(Math.Pow(CordList[counter - 1][i].Y - CordList[counter - 1][i - 64].Y, 2)));
-                   }
-               }
-               else return;
-
-               double max = CList[0];
-               foreach (double d in CList) if (d > max) max = d;
-
-               Cmax.Add(max / Len[Len.Count - 1]);
-
-               int n = 128;
-               double temp = 0;
-
-               float[] ar = new float[n];
-               float[] ai = new float[n];
-               float[] amp;
-
-               for (int i = 0; i < n; i++)
-               {
-                   if (i < distance.Count) ar[i] = (float)distance[i];
-                   else ar[i] = 0;
-                   ai[i] = 0;
-               }
-
-               FFT.complexToComplex(-1, n, ar, ai);
-
-               float[] am = new float[n];
-               double energy = 0;
-               for (int i = 0; i < n; i++)
-               {
-                   ar[ar.Length - i - 1] = ar[ar.Length - i - 1] - ar[i];
-                   ai[ai.Length - i - 1] = ai[ai.Length - i - 1] + ai[i];
-                   am[i] = ((ar[i] * ar[i] + ai[i] * ai[i]) / am.Length);
-               }
-
-               for (int i = 0; i < distance.Count; i++)
-               {
-                   temp += distance[i];
-                   energy += Math.Pow(distance[i], 2); 
-               }
-
-               energyList.Add(energy);
-
-               amp = new float[n];
-
-               for (int i = 0; i < n; i++) amp[i] = am[i] / (float)energy;                 
-
-               ampList.Add(amp);
-               
-               V.Add(temp * 10000000 / time.Ticks / Len[Len.Count - 1]);
-               discCList.Add(CList);
-               CList = new List<double>();
-           }
-
-           Coord.X = x;
-           Coord.Y = y;
+           MouseTrack.Add(e.Location);
        }
 
-       public static void Trecker(MouseEventArgs e)
-       {
-           Glist.Add(e.Location);
-       }
-
-       public static void RefreshList(List<Point> l)
+        public void RefreshList(List<Point> l)
        {
            l = new List<Point>();
        }
 
-       public static void Refresher()
+        public void Refresher()
        {
-           Glist = new List<Point>();
-           Size = new List<double>();
-           Len = new List<double>();
-           Sec = new List<DateTime>();
-           T = new List<double>();
-           ampList = new List<float[]>();
-           Cmax = new List<double>();
+           MouseTrack = new List<Point>();
+           shapeSize = new List<double>();
+           lensContainer = new List<double>();
+           clickTimeContainer = new List<DateTime>();
+           t = new List<double>();
+           ampContainer = new List<float[]>();
+           maxDiffTracks = new List<double>();
            Cmid = new List<double>();
            energyList = new List<double>();
            timeList = new List<DateTime>();

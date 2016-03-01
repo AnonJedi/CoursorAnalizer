@@ -106,6 +106,146 @@
           <Feature id="15" value="3990550" />
         </Realization>
       </Class>
+      <Class name="12">
+        <Realization>
+          <Feature id="1" value="0,952212199312715" />
+          <Feature id="2" value="1,32989690721649" />
+          <Feature id="3" value="1639,06213969705" />
+          <Feature id="4" value="6,103516E-05" />
+          <Feature id="5" value="6,103516E-05" />
+          <Feature id="6" value="6,103516E-05" />
+          <Feature id="7" value="6,103516E-05" />
+          <Feature id="8" value="6,103516E-05" />
+          <Feature id="9" value="6,103516E-05" />
+          <Feature id="10" value="6,103516E-05" />
+          <Feature id="11" value="6,103516E-05" />
+          <Feature id="12" value="6,103516E-05" />
+          <Feature id="13" value="6,103516E-05" />
+          <Feature id="14" value="1,65801611430174" />
+          <Feature id="15" value="219961" />
+        </Realization>
+        <Realization>
+          <Feature id="1" value="0,693185014704002" />
+          <Feature id="2" value="0,927272727272727" />
+          <Feature id="3" value="2690,93086747023" />
+          <Feature id="4" value="0,0001704949" />
+          <Feature id="5" value="0,0001702101" />
+          <Feature id="6" value="0,0001693577" />
+          <Feature id="7" value="0,0001679443" />
+          <Feature id="8" value="0,0001659805" />
+          <Feature id="9" value="0,0001634812" />
+          <Feature id="10" value="0,0001604652" />
+          <Feature id="11" value="0,0001569553" />
+          <Feature id="12" value="0,0001529778" />
+          <Feature id="13" value="0,0001485624" />
+          <Feature id="14" value="7,3159890426055" />
+          <Feature id="15" value="1086338" />
+        </Realization>
+      </Class>
+      <Class name="54621">
+        <Realization>
+          <Feature id="1" value="1,22435241990457" />
+          <Feature id="2" value="1,48773006134969" />
+          <Feature id="3" value="1221,95080361531" />
+          <Feature id="4" value="0,0001036839" />
+          <Feature id="5" value="0,0001036325" />
+          <Feature id="6" value="0,0001034785" />
+          <Feature id="7" value="0,0001032223" />
+          <Feature id="8" value="0,0001028644" />
+          <Feature id="9" value="0,0001024058" />
+          <Feature id="10" value="0,0001018474" />
+          <Feature id="11" value="0,0001011908" />
+          <Feature id="12" value="0,0001004374" />
+          <Feature id="13" value="9,958915E-05" />
+          <Feature id="14" value="1,93997989964325" />
+          <Feature id="15" value="539129" />
+        </Realization>
+        <Realization>
+          <Feature id="1" value="0,311555952574306" />
+          <Feature id="2" value="0,384541984732824" />
+          <Feature id="3" value="3790,9157309099" />
+          <Feature id="4" value="0,0002073677" />
+          <Feature id="5" value="0,000206766" />
+          <Feature id="6" value="0,0002049687" />
+          <Feature id="7" value="0,0002019998" />
+          <Feature id="8" value="0,0001978987" />
+          <Feature id="9" value="0,0001927196" />
+          <Feature id="10" value="0,0001865305" />
+          <Feature id="11" value="0,0001794124" />
+          <Feature id="12" value="0,0001714574" />
+          <Feature id="13" value="0,0001627678" />
+          <Feature id="14" value="2,01849320100959" />
+          <Feature id="15" value="1078258" />
+        </Realization>
+        <Realization>
+          <Feature id="1" value="2,8566234946603" />
+          <Feature id="2" value="3,44171779141104" />
+          <Feature id="3" value="1295,31348429426" />
+          <Feature id="4" value="0,0003597678" />
+          <Feature id="5" value="0,0003561965" />
+          <Feature id="6" value="0,0003456479" />
+          <Feature id="7" value="0,0003286068" />
+          <Feature id="8" value="0,0003058496" />
+          <Feature id="9" value="0,0002783987" />
+          <Feature id="10" value="0,0002474629" />
+          <Feature id="11" value="0,0002143684" />
+          <Feature id="12" value="0,0001804833" />
+          <Feature id="13" value="0,0001471424" />
+          <Feature id="14" value="24,9357674360831" />
+          <Feature id="15" value="2374287" />
+        </Realization>
+        <Realization>
+          <Feature id="1" value="1,03754076195021" />
+          <Feature id="2" value="1,27821522309711" />
+          <Feature id="3" value="1484,2445396279" />
+          <Feature id="4" value="0,000572771" />
+          <Feature id="5" value="0,0005600736" />
+          <Feature id="6" value="0,0005233334" />
+          <Feature id="7" value="0,0004664145" />
+          <Feature id="8" value="0,0003951488" />
+          <Feature id="9" value="0,0003165309" />
+          <Feature id="10" value="0,0002377753" />
+          <Feature id="11" value="0,0001653911" />
+          <Feature id="12" value="0,0001044108" />
+          <Feature id="13" value="5,788534E-05" />
+          <Feature id="14" value="27,5426373053331" />
+          <Feature id="15" value="3909437" />
+        </Realization>
+        <Realization>
+          <Feature id="1" value="1,22047548981646" />
+          <Feature id="2" value="1,4756446991404" />
+          <Feature id="3" value="1384,35511800901" />
+          <Feature id="4" value="0,0007859181" />
+          <Feature id="5" value="0,0007535758" />
+          <Feature id="6" value="0,0006629404" />
+          <Feature id="7" value="0,0005314874" />
+          <Feature id="8" value="0,0003832045" />
+          <Feature id="9" value="0,000242542" />
+          <Feature id="10" value="0,000128682" />
+          <Feature id="11" value="5,174453E-05" />
+          <Feature id="12" value="1,185195E-05" />
+          <Feature id="13" value="1,025869E-06" />
+          <Feature id="14" value="45,232585411264" />
+          <Feature id="15" value="5444587" />
+        </Realization>
+        <Realization>
+          <Feature id="1" value="0,609122495151907" />
+          <Feature id="2" value="0,733516483516483" />
+          <Feature id="3" value="4132,15113205456" />
+          <Feature id="4" value="0,001057675" />
+          <Feature id="5" value="0,0009811703" />
+          <Feature id="6" value="0,0007778858" />
+          <Feature id="7" value="0,0005144804" />
+          <Feature id="8" value="0,0002683566" />
+          <Feature id="9" value="9,581527E-05" />
+          <Feature id="10" value="1,371085E-05" />
+          <Feature id="11" value="1,847908E-06" />
+          <Feature id="12" value="2,170784E-05" />
+          <Feature id="13" value="3,917486E-05" />
+          <Feature id="14" value="20,140732860516" />
+          <Feature id="15" value="7249098" />
+        </Realization>
+      </Class>
     </Features>
   </Classes>
 </root>

@@ -48,8 +48,8 @@ namespace CoursorAnalizer
             }
             else if (counter > 0)
             {
-                Vector.CordList.Add(Vector.Glist);
-                Vector.RefreshList(Vector.Glist);
+                Vector.mouseTracksContainer.Add(Vector.MouseTrack);
+                Vector.RefreshList(Vector.MouseTrack);
             }
 
             if (!isStarted && (counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
@@ -113,7 +113,7 @@ namespace CoursorAnalizer
                 Vector.MathExpectation(counter);
                 Vector.Variance(counter);
                 Saver.SaveXML(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.V, Vector.energyList);
-                outTextBox.Text = Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT, Vector.ampM, Vector.ampD, Vector.allAmp);
+                outTextBox.Text = Saver.SaveTXT(Name, Vector.mCmid, Vector.mCmax, Vector.mT, Vector.dCmid, Vector.dCmax, Vector.dT, Vector.ampExpiration, Vector.ampD, Vector.allAmp);
                 Saver.SaveTXT(Name, Vector.Cmid, Vector.Cmax, Vector.T, Vector.ampList, Vector.energyList);
                 counter = 0;
                 isReg = false;
