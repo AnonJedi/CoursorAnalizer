@@ -4,9 +4,9 @@ using System.Windows.Forms;
 using System.Drawing;
 
 
-namespace CoursorAnalizer
+namespace CursorAnalyzer
 {
-    public class Vector
+    public class ParamsCalculationService
     {
         #region Var
 
@@ -456,28 +456,28 @@ namespace CoursorAnalizer
         }
 
         public void Trecker(MouseEventArgs e)
-       {
-           MouseTrack.Add(e.Location);
-       }
+        {
+            MouseTrack.Add(e.Location);
+        }
 
         public void RefreshList(List<Point> l)
-       {
-           l = new List<Point>();
-       }
+        {
+            l = new List<Point>();
+        }
 
         public void Refresher()
-       {
-           MouseTrack = new List<Point>();
-           ShapeSize = new List<double>();
-           LensContainer = new List<double>();
-           ClickTimeContainer = new List<DateTime>();
-           T = new List<double>();
-           AmpContainer = new List<float[]>();
-           MaxDiffTracks = new List<double>();
-           MidDiffTracks = new List<double>();
-           EnergyContainer = new List<double>();
-           TimeContainer = new List<DateTime>();
-           MouseSpeed = new List<double>();
-       }
+        {
+            MouseTrack = new List<Point>();
+            ShapeSize = new List<double>();
+            LensContainer = new List<double>();
+            ClickTimeContainer = new List<DateTime>();
+            T = new List<double>();
+            AmpContainer = new List<float[]>();
+            MaxDiffTracks = new List<double>();
+            MidDiffTracks = new List<double>();
+            EnergyContainer = new List<double>();
+            TimeContainer = new List<DateTime>();
+            MouseSpeed = new List<double>();
+        }
     }
 }

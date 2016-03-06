@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CoursorAnalizer
+namespace CursorAnalyzer
 {
     static class Program
     {
@@ -17,7 +14,7 @@ namespace CoursorAnalizer
           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Analizer());
+            Application.Run(new Analyzer());
         }
     }
 }

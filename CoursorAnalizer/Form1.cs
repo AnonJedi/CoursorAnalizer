@@ -1,32 +1,31 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using CursorAnalyzer.model.domain;
+using CursorAnalyzer.model.service;
 
-namespace CoursorAnalizer
+namespace CursorAnalyzer
 {
-    public partial class Analizer : Form
+    public partial class Analyzer : Form
     {
         #region Var
 
-        private Random random = new Random(); //генератор рандомных чисел для генерации позиции и размера фигуры
         private int x, y, w;  //координаты кнопки и её размер
         private Bitmap bitmap;   //место отрисовки интерфейса
         private Graphics g;  //обект графики
-        private bool isStarted = false;  //флаг нажатия кнопки старт
-        private int counter = 0; //счетчик кликнутых фигур
         private DateTime currentClickTime; //время с начала клика
-        private DateTime previousClickTime; //время предыдущего клика
-        private DateTime allWorkingTime; //время теста
         private string Name;
         private bool isReg = false;
+        private AnalyzerService analyzerService;
     
         #endregion
 
         #region Ctor
 
-        public Analizer()
+        public Analyzer()
         {
             InitializeComponent();
+            analyzerService = new AnalyzerService();
         }
         #endregion
 
@@ -35,53 +34,18 @@ namespace CoursorAnalizer
             if (!isReg)
             {
                 MessageBox.Show("Registred please!", "Caution!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
             }
-
-            currentClickTime = DateTime.Now;
-            ParamsCalculationService.timeList.Add(currentClickTime);
-
-            if (counter == 0)
+            else
             {
-                allWorkingTime = DateTime.Now;
-            }
-            else if (counter > 0)
-            {
-                ParamsCalculationService.mouseTracksContainer.Add(ParamsCalculationService.MouseTrack);
-                ParamsCalculationService.RefreshList(ParamsCalculationService.MouseTrack);
-            }
-
-            if (!isStarted && (counter == 0)||((e.X - x <= w) && (e.Y - y <= w) && (e.X - x >= 0) && (e.Y - y >= 0)))     //проверка, начат ли тест
-            {
-                counterLbl.Text = (counter).ToString();
-                previousClickTime = new DateTime(currentClickTime.Ticks - previousClickTime.Ticks);
-                ParamsCalculationService.Sec.Add(previousClickTime);
-                previousClickTime = currentClickTime;
-
-                bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   
+                counterLbl.Text = (analyzerService.ClickCounter).ToString();
+                Shape newShape = analyzerService.parseInputParams(e.X, e.Y, analyzerService.Size, 
+                    pictureBox1.Width, pictureBox1.Height);
+                if (newShape == null) return;
+                bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
                 g = Graphics.FromImage(bitmap);
-
-                while (true)
-                {
-                    var oldX = x;
-                    var oldY = y;
-
-                    w = random.Next(180) + 20;
-                    x = random.Next(pictureBox1.Size.Width - w);
-                    y = random.Next(pictureBox1.Size.Height - w);
-                    
-                    var distance = Math.Sqrt(Math.Pow(oldX - x, 2) + Math.Pow(oldY - y, 2));
-                    
-                    if (distance >= 128) break;
-                }
-
-                g.FillRectangle(new SolidBrush(Color.BlueViolet), x, y, w, w);
+                g.FillRectangle(new SolidBrush(Color.BlueViolet), newShape.X, newShape.Y, newShape.Size, newShape.Size);
                 pictureBox1.Image = bitmap;
-                isStarted = true;
-                ParamsCalculationService.SaverParam(w, x, y, counter, ParamsCalculationService.Sec[ParamsCalculationService.Sec.Count - 1]);
-                counter++;
             }
-          
         }
 
         private void Analizer_Load(object sender, EventArgs e)
@@ -94,7 +58,7 @@ namespace CoursorAnalizer
 
         private void STOPBaton_Click(object sender, EventArgs e)
         {
-            if (isStarted)
+            if (analyzerService.IsStarted)
             {
                 NameLbl.Text = Name + " finished!";
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
@@ -102,7 +66,7 @@ namespace CoursorAnalizer
                 g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
                 pictureBox1.Image = bitmap; //закидываем её в pictureBox
 
-                if (counter > 1)
+                if (analyzerService.ClickCounter > 1)
                 {
                     allWorkingTime = new DateTime(currentClickTime.Ticks - allWorkingTime.Ticks);
                     ParamsCalculationService.MidV(allWorkingTime, counter);
@@ -123,8 +87,8 @@ namespace CoursorAnalizer
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isStarted)
-                ParamsCalculationService.Trecker(e);
+            if (analyzerService.IsStarted)
+                analyzerService.CalculationService.Trecker(e);
         }
 
         private void RegBtn_Click(object sender, EventArgs e)

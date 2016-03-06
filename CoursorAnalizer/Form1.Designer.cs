@@ -1,6 +1,6 @@
-﻿namespace CoursorAnalizer
+﻿namespace CursorAnalyzer
 {
-    partial class Analizer
+    partial class Analyzer
     {
         /// <summary>
         /// Требуется переменная конструктора.

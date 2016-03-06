@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoursorAnalizer", "CoursorAnalizer\CoursorAnalizer.csproj", "{71A89E3D-D21C-4272-AC67-78C6FA49DE97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursorAnalyzer", "CoursorAnalizer\CursorAnalyzer.csproj", "{71A89E3D-D21C-4272-AC67-78C6FA49DE97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

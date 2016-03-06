@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoursorAnalizer
+namespace CursorAnalyzer
 {
     class FFT
     {

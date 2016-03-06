@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 
-namespace CoursorAnalizer
+namespace CursorAnalyzer
 {
     static class Saver
     {
