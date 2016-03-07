@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using CursorAnalyzer.model.domain;
+using CursorAnalyzer.model.repository;
 
 namespace CursorAnalyzer.model.service
 {
@@ -30,8 +32,8 @@ namespace CursorAnalyzer.model.service
         }
 
         private DateTime allWorkingTime; //время теста
-        private Shape shape;
         private DateTime previousClickTime; //время предыдущего клика
+        private DateTime currentClickTime;
         private int x, y, size;
         public int Size
         {
@@ -39,18 +41,28 @@ namespace CursorAnalyzer.model.service
             set { size = value; }
         }
 
+        private bool isReg = false;
+        public bool IsReg
+        {
+            get { return isReg; }
+            set { isReg = value; }
+        }
+
+        private UserRepository userRepository;
+
         #endregion
         
         public AnalyzerService()
         {
             calculationService = new ParamsCalculationService();
+            userRepository = new UserRepository("DataBase.xml");
             isStarted = false;
             clickCounter = 0;
         }
 
         public Shape parseInputParams(int mouseX, int mouseY, int shapeSize, int width, int height)
         {
-            DateTime currentClickTime = DateTime.Now;
+            currentClickTime = DateTime.Now;
             calculationService.ClickTimeContainer.Add(currentClickTime);
 
             if (clickCounter == 0)
@@ -59,8 +71,8 @@ namespace CursorAnalyzer.model.service
             }
             else
             {
-                ParamsCalculationService.mouseTracksContainer.Add(ParamsCalculationService.MouseTrack);
-                ParamsCalculationService.RefreshList(ParamsCalculationService.MouseTrack);
+                calculationService.MouseTracksContainer.Add(calculationService.MouseTrack);
+                calculationService.RefreshList(calculationService.MouseTrack);
             }
 
             if (!isStarted && (clickCounter == 0) || 
@@ -68,7 +80,7 @@ namespace CursorAnalyzer.model.service
                 (mouseX - x >= 0) && (mouseY - y >= 0)))     //проверка, начат ли тест
             {
                 previousClickTime = new DateTime(currentClickTime.Ticks - previousClickTime.Ticks);
-                ParamsCalculationService.Sec.Add(previousClickTime);
+                calculationService.ClickTimeContainer.Add(previousClickTime);
                 previousClickTime = currentClickTime;
 
                 while (true)
@@ -87,11 +99,44 @@ namespace CursorAnalyzer.model.service
 
                 
                 isStarted = true;
-                ParamsCalculationService.SaverParam(w, x, y, clickCounter, ParamsCalculationService.Sec[ParamsCalculationService.Sec.Count - 1]);
+                calculationService.SaverParam(size, x, y, clickCounter, 
+                    calculationService.ClickTimeContainer[calculationService.ClickTimeContainer.Count - 1]);
                 clickCounter++;
                 return new Shape(x, y, size, clickCounter);
             }
             return null;
+        }
+
+        public void stopTest()
+        {
+            if (ClickCounter > 1)
+            {
+                allWorkingTime = new DateTime(currentClickTime.Ticks - allWorkingTime.Ticks);
+                calculationService.MidV(allWorkingTime, clickCounter);
+            }
+            else calculationService.MidV(currentClickTime, clickCounter);
+
+            calculationService.MathExpectation(clickCounter);
+            calculationService.Variance(clickCounter);
+            Saver.SaveXML(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.V, ParamsCalculationService.energyList);
+            //Saver.SaveTXT(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.energyList);
+            clickCounter = 0;
+            isReg = false;
+            isStarted = false;
+        }
+
+        public bool Registrate(string name)
+        {
+            if (!isReg)
+            {
+                var users = userRepository.FetchAllUsers();
+
+                if (users.Contains(name)) isReg = false;
+
+                ParamsCalculationService.Refresher();
+                isReg = true;
+                return isReg;
+            }
         }
     }
 }

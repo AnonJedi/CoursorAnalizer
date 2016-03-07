@@ -1,0 +1,2 @@
+C:\D\git\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe.config
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.exe

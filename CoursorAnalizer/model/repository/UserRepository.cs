@@ -33,7 +33,8 @@ namespace CursorAnalyzer.model.repository
                 {
                     var root = xmlDocument.DocumentElement;
                     var featuresNode = root.SelectSingleNode("descendant::Features");
-                    return (from XmlNode node in featuresNode.SelectNodes("Class") select node.Attributes.GetNamedItem("name").Value).ToList();
+                    return (from XmlNode node in featuresNode.SelectNodes("Class") 
+                            select node.Attributes.GetNamedItem("name").Value).ToList();
                 }
                 catch (Exception)
                 {

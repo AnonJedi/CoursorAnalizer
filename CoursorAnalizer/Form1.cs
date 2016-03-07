@@ -14,8 +14,7 @@ namespace CursorAnalyzer
         private Bitmap bitmap;   //место отрисовки интерфейса
         private Graphics g;  //обект графики
         private DateTime currentClickTime; //время с начала клика
-        private string Name;
-        private bool isReg = false;
+        private string name;
         private AnalyzerService analyzerService;
     
         #endregion
@@ -31,7 +30,7 @@ namespace CursorAnalyzer
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (!isReg)
+            if (!analyzerService.IsReg)
             {
                 MessageBox.Show("Registred please!", "Caution!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -50,39 +49,24 @@ namespace CursorAnalyzer
 
         private void Analizer_Load(object sender, EventArgs e)
         {
-            bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
+            bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);          
             g = Graphics.FromImage(bitmap);
             g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
-            pictureBox1.Image = bitmap; //закидываем её в pictureBox
+            pictureBox1.Image = bitmap; 
         }
 
-        private void STOPBaton_Click(object sender, EventArgs e)
+        private void STOPBtn_Click(object sender, EventArgs e)
         {
             if (analyzerService.IsStarted)
             {
-                NameLbl.Text = Name + " finished!";
+                NameLbl.Text = name + " finished!";
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
                 g = Graphics.FromImage(bitmap);
                 g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
-                pictureBox1.Image = bitmap; //закидываем её в pictureBox
+                pictureBox1.Image = bitmap;
 
-                if (analyzerService.ClickCounter > 1)
-                {
-                    allWorkingTime = new DateTime(currentClickTime.Ticks - allWorkingTime.Ticks);
-                    ParamsCalculationService.MidV(allWorkingTime, counter);
-                }
-                else ParamsCalculationService.MidV(currentClickTime, counter);
-
-                ParamsCalculationService.MathExpectation(counter);
-                ParamsCalculationService.Variance(counter);
-                Saver.SaveXML(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.V, ParamsCalculationService.energyList);
-                outTextBox.Text = Saver.SaveTXT(Name, ParamsCalculationService.mCmid, ParamsCalculationService.mCmax, ParamsCalculationService.mT, ParamsCalculationService.dCmid, ParamsCalculationService.dCmax, ParamsCalculationService.dT, ParamsCalculationService.ampExpiration, ParamsCalculationService.ampD, ParamsCalculationService.allAmp);
-                Saver.SaveTXT(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.energyList);
-                counter = 0;
-                isReg = false;
-                isStarted = false;
+                analyzerService.stopTest();
             }
-            
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -93,23 +77,14 @@ namespace CursorAnalyzer
 
         private void RegBtn_Click(object sender, EventArgs e)
         {
-            if (!isReg)
+            name = nameTextBox.Text;
+            if (analyzerService.Registrate(name))
             {
-                Name = nameTextBox.Text;
-                ParamsCalculationService.ReadBase();
-
-                if (ParamsCalculationService.users.Contains(Name))
-                {
-                    MessageBox.Show("This name alredy exist!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);                   
-                    return;
-                }
-
                 counterLbl.Text = "0";
-                ParamsCalculationService.Refresher();
-                isReg = true;
-                nameTextBox.Text = "";
-                NameLbl.Text = Name + " in action!";
+                NameLbl.Text = name + " in action!";
+                nameTextBox.Text = "";   
             }
+            else MessageBox.Show("This name alredy exist!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             
         }
 

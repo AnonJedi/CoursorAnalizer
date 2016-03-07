@@ -30,7 +30,7 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.outTextBox = new System.Windows.Forms.TextBox();
-            this.STOPBaton = new System.Windows.Forms.Button();
+            this.STOPBtn = new System.Windows.Forms.Button();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.RegBtn = new System.Windows.Forms.Button();
@@ -63,18 +63,18 @@
             this.outTextBox.Size = new System.Drawing.Size(524, 115);
             this.outTextBox.TabIndex = 1;
             // 
-            // STOPBaton
+            // STOPBtn
             // 
-            this.STOPBaton.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.STOPBaton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.STOPBaton.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.STOPBaton.Location = new System.Drawing.Point(1064, 2);
-            this.STOPBaton.Name = "STOPBaton";
-            this.STOPBaton.Size = new System.Drawing.Size(48, 23);
-            this.STOPBaton.TabIndex = 2;
-            this.STOPBaton.Text = "STOP";
-            this.STOPBaton.UseVisualStyleBackColor = false;
-            this.STOPBaton.Click += new System.EventHandler(this.STOPBaton_Click);
+            this.STOPBtn.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.STOPBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.STOPBtn.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.STOPBtn.Location = new System.Drawing.Point(1064, 2);
+            this.STOPBtn.Name = "STOPBtn";
+            this.STOPBtn.Size = new System.Drawing.Size(48, 23);
+            this.STOPBtn.TabIndex = 2;
+            this.STOPBtn.Text = "STOP";
+            this.STOPBtn.UseVisualStyleBackColor = false;
+            this.STOPBtn.Click += new System.EventHandler(this.STOPBtn_Click);
             // 
             // nameTextBox
             // 
@@ -143,7 +143,7 @@
             this.counterLbl.TabIndex = 9;
             this.counterLbl.Text = "Counter";
             // 
-            // Analizer
+            // Analyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -155,14 +155,14 @@
             this.Controls.Add(this.RegBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nameTextBox);
-            this.Controls.Add(this.STOPBaton);
+            this.Controls.Add(this.STOPBtn);
             this.Controls.Add(this.outTextBox);
             this.Controls.Add(this.pictureBox1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Analizer";
+            this.name = "Analyzer";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -178,7 +178,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox outTextBox;
-        private System.Windows.Forms.Button STOPBaton;
+        private System.Windows.Forms.Button STOPBtn;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button RegBtn;
