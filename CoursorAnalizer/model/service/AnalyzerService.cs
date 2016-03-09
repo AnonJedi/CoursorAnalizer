@@ -48,13 +48,19 @@ namespace CursorAnalyzer.model.service
             set { isReg = value; }
         }
 
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; }
+        }
+
         private UserRepository userRepository;
 
         #endregion
         
         public AnalyzerService()
         {
-            calculationService = new ParamsCalculationService();
             userRepository = new UserRepository("DataBase.xml");
             isStarted = false;
             clickCounter = 0;
@@ -118,7 +124,8 @@ namespace CursorAnalyzer.model.service
 
             calculationService.MathExpectation(clickCounter);
             calculationService.Variance(clickCounter);
-            Saver.SaveXML(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.V, ParamsCalculationService.energyList);
+            Saver.SaveXML(UserName, calculationService.MidDiffTracks, calculationService.MaxDiffTracks, 
+                calculationService.T, calculationService.AmpContainer, calculationService.MouseSpeed, calculationService.EnergyContainer);
             //Saver.SaveTXT(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.energyList);
             clickCounter = 0;
             isReg = false;
@@ -127,16 +134,17 @@ namespace CursorAnalyzer.model.service
 
         public bool Registrate(string name)
         {
-            if (!isReg)
+            if (isReg) return isReg;
+            var users = userRepository.FetchAllUsers();
+
+            if (users.Contains(name)) isReg = false;
+            else
             {
-                var users = userRepository.FetchAllUsers();
-
-                if (users.Contains(name)) isReg = false;
-
-                ParamsCalculationService.Refresher();
+                UserName = name;
+                calculationService = new ParamsCalculationService();
                 isReg = true;
-                return isReg;
             }
+            return isReg;
         }
     }
 }

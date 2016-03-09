@@ -154,9 +154,6 @@ namespace CursorAnalyzer
             set { maxDiffTracksDispersion = value; }
         }
 
-        // TODO: перетащить в локальную облость
-        public static List<string> users;
-
         //хранилище отклонений координаты мыши от идеальной координаты
         private List<double> diffContainer;
         public List<double> DiffContainer
@@ -218,146 +215,160 @@ namespace CursorAnalyzer
 
         #endregion
 
-        public static void ReadBase()
+        public ParamsCalculationService()
         {
-            users = Saver.ReadDB();
+            MouseTrack = new List<Point>();
+            ShapeSize = new List<double>();
+            LensContainer = new List<double>();
+            ClickTimeContainer = new List<DateTime>();
+            T = new List<double>();
+            AmpContainer = new List<float[]>();
+            MaxDiffTracks = new List<double>();
+            MidDiffTracks = new List<double>();
+            EnergyContainer = new List<double>();
+            TimeContainer = new List<DateTime>();
+            MouseSpeed = new List<double>();
+            MouseTracksContainer = new List<List<Point>>();
+            DiffContainer = new List<double>();
+            DistanceLen = new List<double>();
+            TracksDiffContainer = new List<List<double>>();
         }
 
         public void MathExpectation(int counter)
-       {
-           if (counter > 0)
-           {
-               expirationT = 0;
-               maxDiffTracksExpiration = 0;
-               midDiffTracksExpiration = 0;
-               ampExpiration = new float[10];
-               allAmp = new float[2];
-               allAmp[0] = 0;
-               allAmp[1] = 0;
-               for (int i = 0; i < 10; i++) ampExpiration[i] = 0;
+        {
+            if (counter > 0)
+            {
+                expirationT = 0;
+                maxDiffTracksExpiration = 0;
+                midDiffTracksExpiration = 0;
+                ampExpiration = new float[10];
+                allAmp = new float[2];
+                allAmp[0] = 0;
+                allAmp[1] = 0;
+                for (int i = 0; i < 10; i++) ampExpiration[i] = 0;
 
-               for (int i = 0; i < lensContainer.Count; i++)
-               {
-                   t.Add(midMouseSpeed * Math.Log(lensContainer[i] / shapeSize[i] + 1, 2));
-                   expirationT += t[i];
-                   maxDiffTracksExpiration += maxDiffTracks[i];
-               }
+                for (int i = 0; i < lensContainer.Count; i++)
+                {
+                    t.Add(midMouseSpeed * Math.Log(lensContainer[i] / shapeSize[i] + 1, 2));
+                    expirationT += t[i];
+                    maxDiffTracksExpiration += maxDiffTracks[i];
+                }
 
-               foreach (double d in MidDiffTracks) midDiffTracksExpiration += d;
-               foreach (float[] floats in ampContainer)
-               {
-                   ampExpiration[0] += floats[0];
-                   ampExpiration[1] += floats[1];
-                   ampExpiration[2] += floats[2];
-                   ampExpiration[3] += floats[3];
-                   ampExpiration[4] += floats[4];
-                   ampExpiration[5] += floats[5];
-                   ampExpiration[6] += floats[6];
-                   ampExpiration[7] += floats[7];
-                   ampExpiration[8] += floats[8];
-                   ampExpiration[9] += floats[9];
-               }
+                foreach (double d in MidDiffTracks) midDiffTracksExpiration += d;
+                foreach (float[] floats in ampContainer)
+                {
+                    ampExpiration[0] += floats[0];
+                    ampExpiration[1] += floats[1];
+                    ampExpiration[2] += floats[2];
+                    ampExpiration[3] += floats[3];
+                    ampExpiration[4] += floats[4];
+                    ampExpiration[5] += floats[5];
+                    ampExpiration[6] += floats[6];
+                    ampExpiration[7] += floats[7];
+                    ampExpiration[8] += floats[8];
+                    ampExpiration[9] += floats[9];
+                }
 
-               var count = 0;
-               foreach (float[] floats in ampContainer)
-               {
-                   foreach (float f in floats)
-                   {
-                       count++;
-                       allAmp[0] += f;
-                   }
-               }
-               allAmp[0] = allAmp[0]/count;
+                var count = 0;
+                foreach (float[] floats in ampContainer)
+                {
+                    foreach (float f in floats)
+                    {
+                        count++;
+                        allAmp[0] += f;
+                    }
+                }
+                allAmp[0] = allAmp[0]/count;
 
-               expirationT = expirationT/lensContainer.Count;
-               maxDiffTracksExpiration = maxDiffTracksExpiration/lensContainer.Count;
-               midDiffTracksExpiration = midDiffTracksExpiration / MidDiffTracks.Count;
+                expirationT = expirationT/lensContainer.Count;
+                maxDiffTracksExpiration = maxDiffTracksExpiration/lensContainer.Count;
+                midDiffTracksExpiration = midDiffTracksExpiration / MidDiffTracks.Count;
 
-               for (int i = 0; i < 10; i++) ampExpiration[i] = ampExpiration[i]/ampContainer.Count;
-           }      
-       }
+                for (int i = 0; i < 10; i++) ampExpiration[i] = ampExpiration[i]/ampContainer.Count;
+            }      
+        }
 
         public void Variance(int counter)
-       {
-           if (counter > 0)
-           {
-               midDiffTracksDispertion = 0;
-               for (int i = 1; i < MidDiffTracks.Count; i++)
-               {
-                   midDiffTracksDispertion = Math.Sqrt((i - 1) * midDiffTracksDispertion * midDiffTracksDispertion
-                       / i + Math.Pow(MidDiffTracks[i] - midDiffTracksExpiration, 2));
-               }
+        {
+            if (counter > 0)
+            {
+                midDiffTracksDispertion = 0;
+                for (int i = 1; i < MidDiffTracks.Count; i++)
+                {
+                    midDiffTracksDispertion = Math.Sqrt((i - 1) * midDiffTracksDispertion * midDiffTracksDispertion
+                        / i + Math.Pow(MidDiffTracks[i] - midDiffTracksExpiration, 2));
+                }
 
-               maxDiffTracksDispersion = 0;          
-               for (int i = 1; i < maxDiffTracks.Count; i++)
-               {
-                   maxDiffTracksDispersion = Math.Sqrt((i - 1) * maxDiffTracksDispersion * maxDiffTracksDispersion
-                       / i + Math.Pow(maxDiffTracks[i] - maxDiffTracksExpiration, 2));
-               }
+                maxDiffTracksDispersion = 0;          
+                for (int i = 1; i < maxDiffTracks.Count; i++)
+                {
+                    maxDiffTracksDispersion = Math.Sqrt((i - 1) * maxDiffTracksDispersion * maxDiffTracksDispersion
+                        / i + Math.Pow(maxDiffTracks[i] - maxDiffTracksExpiration, 2));
+                }
 
-               tDispertion = 0;              
-               for (int i = 1; i < t.Count; i++)
-               {
-                   tDispertion = Math.Sqrt((i - 1) * tDispertion * tDispertion / i + Math.Pow(t[i] - expirationT, 2));
-               }
+                tDispertion = 0;              
+                for (int i = 1; i < t.Count; i++)
+                {
+                    tDispertion = Math.Sqrt((i - 1) * tDispertion * tDispertion / i + Math.Pow(t[i] - expirationT, 2));
+                }
 
-               List<float> temp = new List<float>();
-               foreach (float[] floats in ampContainer)
-               {
-                   foreach (float f in floats)
-                   {
-                       temp.Add(f);
-                   }
-               }
+                List<float> temp = new List<float>();
+                foreach (float[] floats in ampContainer)
+                {
+                    foreach (float f in floats)
+                    {
+                        temp.Add(f);
+                    }
+                }
 
-               for (int i = 1; i < temp.Count; i++)
-               {
-                   allAmp[1] = (float)Math.Sqrt((i - 1) * allAmp[1] * allAmp[1] / i + Math.Pow(temp[i] - allAmp[0], 2));                   
-               }
+                for (int i = 1; i < temp.Count; i++)
+                {
+                    allAmp[1] = (float)Math.Sqrt((i - 1) * allAmp[1] * allAmp[1] / i + Math.Pow(temp[i] - allAmp[0], 2));                   
+                }
 
-               ampDispertion = new float[10];
-               for (int i = 0; i < 10; i++) ampDispertion[i] = 0;
+                ampDispertion = new float[10];
+                for (int i = 0; i < 10; i++) ampDispertion[i] = 0;
 
-               for (int i = 1; i < ampContainer.Count; i++)
-               {
-                   ampDispertion[0] = (float)Math.Sqrt((i - 1) * ampDispertion[0] * ampDispertion[0]
-                       / i + Math.Pow(ampContainer[i][0] - ampExpiration[0], 2));
-                   ampDispertion[1] = (float)Math.Sqrt((i - 1) * ampDispertion[1] * ampDispertion[1]
-                       / i + Math.Pow(ampContainer[i][1] - ampExpiration[1], 2));
-                   ampDispertion[2] = (float)Math.Sqrt((i - 1) * ampDispertion[2] * ampDispertion[2] 
-                       / i + Math.Pow(ampContainer[i][2] - ampExpiration[2], 2));
-                   ampDispertion[3] = (float)Math.Sqrt((i - 1) * ampDispertion[3] * ampDispertion[3] 
-                       / i + Math.Pow(ampContainer[i][3] - ampExpiration[3], 2));
-                   ampDispertion[4] = (float)Math.Sqrt((i - 1) * ampDispertion[4] * ampDispertion[4] 
-                       / i + Math.Pow(ampContainer[i][4] - ampExpiration[4], 2));
-                   ampDispertion[5] = (float)Math.Sqrt((i - 1) * ampDispertion[5] * ampDispertion[5]
-                       / i + Math.Pow(ampContainer[i][5] - ampExpiration[5], 2));
-                   ampDispertion[6] = (float)Math.Sqrt((i - 1) * ampDispertion[6] * ampDispertion[6]
-                       / i + Math.Pow(ampContainer[i][6] - ampExpiration[6], 2));
-                   ampDispertion[7] = (float)Math.Sqrt((i - 1) * ampDispertion[7] * ampDispertion[7] 
-                       / i + Math.Pow(ampContainer[i][7] - ampExpiration[7], 2));
-                   ampDispertion[8] = (float)Math.Sqrt((i - 1) * ampDispertion[8] * ampDispertion[8]
-                       / i + Math.Pow(ampContainer[i][8] - ampExpiration[8], 2));
-                   ampDispertion[9] = (float)Math.Sqrt((i - 1) * ampDispertion[9] * ampDispertion[9]
-                       / i + Math.Pow(ampContainer[i][9] - ampExpiration[9], 2));
-               }
-           }
-       }
+                for (int i = 1; i < ampContainer.Count; i++)
+                {
+                    ampDispertion[0] = (float)Math.Sqrt((i - 1) * ampDispertion[0] * ampDispertion[0]
+                        / i + Math.Pow(ampContainer[i][0] - ampExpiration[0], 2));
+                    ampDispertion[1] = (float)Math.Sqrt((i - 1) * ampDispertion[1] * ampDispertion[1]
+                        / i + Math.Pow(ampContainer[i][1] - ampExpiration[1], 2));
+                    ampDispertion[2] = (float)Math.Sqrt((i - 1) * ampDispertion[2] * ampDispertion[2] 
+                        / i + Math.Pow(ampContainer[i][2] - ampExpiration[2], 2));
+                    ampDispertion[3] = (float)Math.Sqrt((i - 1) * ampDispertion[3] * ampDispertion[3] 
+                        / i + Math.Pow(ampContainer[i][3] - ampExpiration[3], 2));
+                    ampDispertion[4] = (float)Math.Sqrt((i - 1) * ampDispertion[4] * ampDispertion[4] 
+                        / i + Math.Pow(ampContainer[i][4] - ampExpiration[4], 2));
+                    ampDispertion[5] = (float)Math.Sqrt((i - 1) * ampDispertion[5] * ampDispertion[5]
+                        / i + Math.Pow(ampContainer[i][5] - ampExpiration[5], 2));
+                    ampDispertion[6] = (float)Math.Sqrt((i - 1) * ampDispertion[6] * ampDispertion[6]
+                        / i + Math.Pow(ampContainer[i][6] - ampExpiration[6], 2));
+                    ampDispertion[7] = (float)Math.Sqrt((i - 1) * ampDispertion[7] * ampDispertion[7] 
+                        / i + Math.Pow(ampContainer[i][7] - ampExpiration[7], 2));
+                    ampDispertion[8] = (float)Math.Sqrt((i - 1) * ampDispertion[8] * ampDispertion[8]
+                        / i + Math.Pow(ampContainer[i][8] - ampExpiration[8], 2));
+                    ampDispertion[9] = (float)Math.Sqrt((i - 1) * ampDispertion[9] * ampDispertion[9]
+                        / i + Math.Pow(ampContainer[i][9] - ampExpiration[9], 2));
+                }
+            }
+        }
 
         public void MidV(DateTime t, int counter)
-       {         
-           if (counter > 0)
-           {
-               double temp = 0;
-               for (int i = 1; i < MouseTrack.Count; i++)
-               {
-                   temp += Math.Sqrt(Math.Pow(MouseTrack[i].X - MouseTrack[i - 1].X, 2)) 
-                       + Math.Sqrt(Math.Pow(MouseTrack[i].Y - MouseTrack[i-1].Y, 2));
-               }
-               midMouseSpeed = temp * 10000000 / t.Ticks;              
-           }
+        {         
+            if (counter > 0)
+            {
+                double temp = 0;
+                for (int i = 1; i < MouseTrack.Count; i++)
+                {
+                    temp += Math.Sqrt(Math.Pow(MouseTrack[i].X - MouseTrack[i - 1].X, 2)) 
+                        + Math.Sqrt(Math.Pow(MouseTrack[i].Y - MouseTrack[i-1].Y, 2));
+                }
+                midMouseSpeed = temp * 10000000 / t.Ticks;              
+            }
            
-       }
+        }
 
         public void SaverParam(int w, int x, int y, int counter, DateTime time)
         {
@@ -463,21 +474,6 @@ namespace CursorAnalyzer
         public void RefreshList(List<Point> l)
         {
             l = new List<Point>();
-        }
-
-        public void Refresher()
-        {
-            MouseTrack = new List<Point>();
-            ShapeSize = new List<double>();
-            LensContainer = new List<double>();
-            ClickTimeContainer = new List<DateTime>();
-            T = new List<double>();
-            AmpContainer = new List<float[]>();
-            MaxDiffTracks = new List<double>();
-            MidDiffTracks = new List<double>();
-            EnergyContainer = new List<double>();
-            TimeContainer = new List<DateTime>();
-            MouseSpeed = new List<double>();
         }
     }
 }

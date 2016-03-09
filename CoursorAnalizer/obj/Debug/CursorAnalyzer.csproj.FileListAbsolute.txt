@@ -1,2 +1,13 @@
 C:\D\git\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe.config
 C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.exe
+C:\D\git\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe.manifest
+C:\D\git\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.application
+C:\D\git\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.exe
+C:\D\git\CoursorAnalizer\CoursorAnalizer\bin\Debug\CoursorAnalizer.pdb
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CursorAnalyzer.csprojResolveAssemblyReference.cache
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CursorAnalyzer.Analyzer.resources
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.Properties.Resources.resources
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CursorAnalyzer.csproj.GenerateResource.Cache
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.exe.manifest
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.application
+C:\D\git\CoursorAnalizer\CoursorAnalizer\obj\Debug\CoursorAnalizer.pdb
