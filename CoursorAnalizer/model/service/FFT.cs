@@ -2,9 +2,19 @@
 
 namespace CursorAnalyzer
 {
+    /// <summary>
+    /// Fourier transformator
+    /// </summary>
     class FFT
     {
-        public static void complexToComplex(int sign, int n, float[] ar, float[] ai)
+        /// <summary>
+        /// Method for transformation simple arrays to complex
+        /// </summary>
+        /// <param name="sign">Sign of array members</param>
+        /// <param name="n">Size of array</param>
+        /// <param name="ar"></param>
+        /// <param name="ai"></param>
+        public static void ComplexToComplex(int sign, int n, float[] ar, float[] ai)
         {
             var scale = (float) Math.Sqrt(1.0f/n);
 

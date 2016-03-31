@@ -84,7 +84,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="model\repository\Saver.cs" />
+    <Compile Include="model\repository\MetricsRepository.cs" />
     <Compile Include="model\service\ParamsCalculationService.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

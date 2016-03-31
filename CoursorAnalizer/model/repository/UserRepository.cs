@@ -6,8 +6,14 @@ using System.Xml;
 
 namespace CursorAnalyzer.model.repository
 {
+    /// <summary>
+    /// Repository for users data
+    /// </summary>
     class UserRepository
     {
+        /// <summary>
+        /// Name of db file
+        /// </summary>
         private readonly string fileName;
         
         public UserRepository(string fileName)
@@ -15,6 +21,10 @@ namespace CursorAnalyzer.model.repository
             this.fileName = fileName;
         }
 
+        /// <summary>
+        /// Method for fetching all usernames from db
+        /// </summary>
+        /// <returns>List of usernames</returns>
         public List<string> FetchAllUsers()
         {
             byte[] byteStream;

@@ -4,7 +4,10 @@ using System.Xml;
 
 namespace CursorAnalyzer
 {
-    static class Saver
+    /// <summary>
+    /// Repository for saving data
+    /// </summary>
+    static class MetricsRepository
     {
         #region Var
 
@@ -15,7 +18,19 @@ namespace CursorAnalyzer
 
         #endregion
 
-        public static void SaveXML(
+        /// <summary>
+        /// Save data to XML file
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="midDiffTracks">List of middle difference betveen 
+        ///                             ideal and real mouse track</param>
+        /// <param name="maxDiffTracks">List of max difference betveen
+        ///                             ideal and real mouse track</param>
+        /// <param name="T">Special parameter of metrics</param>
+        /// <param name="ampContainer">List with amplitudes of mouse distance</param>
+        /// <param name="mouseSpeed">List with mouse speed</param>
+        /// <param name="energyContainer">List with energies</param>
+        public static void SaveMouseParamsAndMetrics(
             string userName, List<double> midDiffTracks, List<double> maxDiffTracks, List<double> T, 
             List<float[]> ampContainer, List<double> mouseSpeed, List<double> energyContainer)
         {
@@ -126,7 +141,10 @@ namespace CursorAnalyzer
                 DBBytes = memoryStream.ToArray();
             }
 
-            WriteDB();
+            using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Write))
+            {
+                fileStream.Write(DBBytes, 0, DBBytes.Length);
+            }
         }
 
         //public static string SaveTXT(string name, double mCmid, double mCmax, double mT, double dCmid, double dCmax, double dT, float[] ampM, float[] ampD, float[] allAmp)
@@ -185,13 +203,5 @@ namespace CursorAnalyzer
         //        file.Write(temp);
         //    }
         //}
-
-        private static void WriteDB()
-        {
-            using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Write))
-            {
-                fileStream.Write(DBBytes, 0, DBBytes.Length);
-            }
-        }
     }
 }

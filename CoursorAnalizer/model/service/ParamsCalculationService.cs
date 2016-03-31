@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 
 
 namespace CursorAnalyzer
 {
+    /// <summary>
+    /// Service for calculation params of mouse metrics
+    /// </summary>
     public class ParamsCalculationService
     {
         #region Var
@@ -234,6 +236,11 @@ namespace CursorAnalyzer
             TracksDiffContainer = new List<List<double>>();
         }
 
+        /// <summary>
+        /// Method for calculation math expiration for 
+        /// all params and save it in container 
+        /// </summary>
+        /// <param name="counter">Count of clicks</param>
         public void MathExpectation(int counter)
         {
             if (counter > 0)
@@ -288,6 +295,11 @@ namespace CursorAnalyzer
             }      
         }
 
+        /// <summary>
+        /// Method for calcuulation dispersion for all parameters
+        /// and save it in container
+        /// </summary>
+        /// <param name="counter">Count of clicks</param>
         public void Variance(int counter)
         {
             if (counter > 0)
@@ -355,6 +367,11 @@ namespace CursorAnalyzer
             }
         }
 
+        /// <summary>
+        /// Calculation of middle speed of mouse moving
+        /// </summary>
+        /// <param name="t">Time of experement</param>
+        /// <param name="counter">Count of clicks</param>
         public void MidV(DateTime t, int counter)
         {         
             if (counter > 0)
@@ -370,6 +387,14 @@ namespace CursorAnalyzer
            
         }
 
+        /// <summary>
+        /// Method for calculation and final save params in containers
+        /// </summary>
+        /// <param name="w">Square side len</param>
+        /// <param name="x">X-coord of square</param>
+        /// <param name="y">Y-coord of square</param>
+        /// <param name="counter">Count of clicks</param>
+        /// <param name="time">Previous click time</param>
         public void SaverParam(int w, int x, int y, int counter, DateTime time)
         {
             if (counter > 0)
@@ -433,7 +458,7 @@ namespace CursorAnalyzer
                     ai[i] = 0;
                 }
 
-                FFT.complexToComplex(-1, n, ar, ai);
+                FFT.ComplexToComplex(-1, n, ar, ai);
 
                 float[] am = new float[n];
                 double energy = 0;
@@ -466,14 +491,13 @@ namespace CursorAnalyzer
             this.MousePoint = new Point(x, y);
         }
 
-        public void Trecker(MouseEventArgs e)
+        /// <summary>
+        /// Method for save opsition in container
+        /// </summary>
+        /// <param name="mousePos">Mouse coords</param>
+        public void Trecker(Point mousePos)
         {
-            MouseTrack.Add(e.Location);
-        }
-
-        public void RefreshList(List<Point> l)
-        {
-            l = new List<Point>();
+            MouseTrack.Add(mousePos);
         }
     }
 }

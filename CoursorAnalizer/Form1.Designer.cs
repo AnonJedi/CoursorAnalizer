@@ -32,11 +32,11 @@
             this.outTextBox = new System.Windows.Forms.TextBox();
             this.STOPBtn = new System.Windows.Forms.Button();
             this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.RegBtn = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.NameLbl = new System.Windows.Forms.Label();
             this.counterLbl = new System.Windows.Forms.Label();
+            this.DBCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,17 +85,10 @@
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(231, 23);
             this.nameTextBox.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(3, 438);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 15);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Your name";
+            this.nameTextBox.Text = "Your name";
+            this.nameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nameTextBox.GotFocus += new System.EventHandler(this.NameTextBox_onFocus);
+            this.nameTextBox.LostFocus += new System.EventHandler(this.NameTextBox_onBlure);
             // 
             // RegBtn
             // 
@@ -136,12 +129,27 @@
             // 
             this.counterLbl.AutoSize = true;
             this.counterLbl.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.counterLbl.ForeColor = System.Drawing.Color.Green;
+            this.counterLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.counterLbl.Location = new System.Drawing.Point(488, 438);
             this.counterLbl.Name = "counterLbl";
             this.counterLbl.Size = new System.Drawing.Size(80, 22);
             this.counterLbl.TabIndex = 9;
             this.counterLbl.Text = "Counter";
+            // 
+            // DBCheckBox
+            // 
+            this.DBCheckBox.AutoSize = true;
+            this.DBCheckBox.Checked = true;
+            this.DBCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.DBCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DBCheckBox.Font = new System.Drawing.Font("Consolas", 10F);
+            this.DBCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.DBCheckBox.Location = new System.Drawing.Point(79, 467);
+            this.DBCheckBox.Name = "DBCheckBox";
+            this.DBCheckBox.Size = new System.Drawing.Size(107, 21);
+            this.DBCheckBox.TabIndex = 11;
+            this.DBCheckBox.Text = "Save in DB";
+            this.DBCheckBox.UseVisualStyleBackColor = true;
             // 
             // Analyzer
             // 
@@ -149,11 +157,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1110, 562);
+            this.Controls.Add(this.DBCheckBox);
             this.Controls.Add(this.counterLbl);
             this.Controls.Add(this.NameLbl);
             this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.RegBtn);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.STOPBtn);
             this.Controls.Add(this.outTextBox);
@@ -162,7 +170,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.name = "Analyzer";
+            this.Name = "Analyzer";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -180,11 +188,11 @@
         private System.Windows.Forms.TextBox outTextBox;
         private System.Windows.Forms.Button STOPBtn;
         private System.Windows.Forms.TextBox nameTextBox;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button RegBtn;
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.Label NameLbl;
         private System.Windows.Forms.Label counterLbl;
+        private System.Windows.Forms.CheckBox DBCheckBox;
     }
 }
 

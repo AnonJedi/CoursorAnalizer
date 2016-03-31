@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 using CursorAnalyzer.model.domain;
 using CursorAnalyzer.model.repository;
 
 namespace CursorAnalyzer.model.service
 {
+    /// <summary>
+    /// Service for parsing and saving params
+    /// </summary>
     class AnalyzerService
     {
         #region Variables
@@ -66,7 +69,17 @@ namespace CursorAnalyzer.model.service
             clickCounter = 0;
         }
 
-        public Shape parseInputParams(int mouseX, int mouseY, int shapeSize, int width, int height)
+        /// <summary>
+        /// Method for parse mouse metrics and time betveen clicks 
+        /// and save params to class-container
+        /// </summary>
+        /// <param name="mouseX">X-coord of mouse</param>
+        /// <param name="mouseY">Y-coord of mouse</param>
+        /// <param name="shapeSize">Size of square side</param>
+        /// <param name="width">Picture box width</param>
+        /// <param name="height">Picture box height</param>
+        /// <returns>POJO class with data of new square and click count</returns>
+        public Shape ParseInputParams(int mouseX, int mouseY, int shapeSize, int width, int height)
         {
             currentClickTime = DateTime.Now;
             calculationService.ClickTimeContainer.Add(currentClickTime);
@@ -78,7 +91,7 @@ namespace CursorAnalyzer.model.service
             else
             {
                 calculationService.MouseTracksContainer.Add(calculationService.MouseTrack);
-                calculationService.RefreshList(calculationService.MouseTrack);
+                calculationService.MouseTrack = new List<Point>();
             }
 
             if (!isStarted && (clickCounter == 0) || 
@@ -113,7 +126,10 @@ namespace CursorAnalyzer.model.service
             return null;
         }
 
-        public void stopTest()
+        /// <summary>
+        /// Method for saving result data in db
+        /// </summary>
+        public void StopTest()
         {
             if (ClickCounter > 1)
             {
@@ -124,14 +140,19 @@ namespace CursorAnalyzer.model.service
 
             calculationService.MathExpectation(clickCounter);
             calculationService.Variance(clickCounter);
-            Saver.SaveXML(UserName, calculationService.MidDiffTracks, calculationService.MaxDiffTracks, 
+            MetricsRepository.SaveMouseParamsAndMetrics(UserName, calculationService.MidDiffTracks, calculationService.MaxDiffTracks, 
                 calculationService.T, calculationService.AmpContainer, calculationService.MouseSpeed, calculationService.EnergyContainer);
-            //Saver.SaveTXT(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.energyList);
+            //MetricsRepository.SaveTXT(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.energyList);
             clickCounter = 0;
             isReg = false;
             isStarted = false;
         }
 
+        /// <summary>
+        /// Check username on existing in DB
+        /// </summary>
+        /// <param name="name">Username</param>
+        /// <returns>True if username is not contains in db, else false</returns>
         public bool Registrate(string name)
         {
             if (isReg) return isReg;

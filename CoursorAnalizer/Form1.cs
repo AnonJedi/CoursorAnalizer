@@ -16,6 +16,7 @@ namespace CursorAnalyzer
         private DateTime currentClickTime; //время с начала клика
         private string name;
         private AnalyzerService analyzerService;
+        private string namePlaceholder = "Your name";
     
         #endregion
 
@@ -37,7 +38,7 @@ namespace CursorAnalyzer
             else
             {
                 counterLbl.Text = (analyzerService.ClickCounter).ToString();
-                Shape newShape = analyzerService.parseInputParams(e.X, e.Y, analyzerService.Size, 
+                Shape newShape = analyzerService.ParseInputParams(e.X, e.Y, analyzerService.Size, 
                     pictureBox1.Width, pictureBox1.Height);
                 if (newShape == null) return;
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
@@ -65,14 +66,14 @@ namespace CursorAnalyzer
                 g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
                 pictureBox1.Image = bitmap;
 
-                analyzerService.stopTest();
+                analyzerService.StopTest();
             }
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (analyzerService.IsStarted)
-                analyzerService.CalculationService.Trecker(e);
+                analyzerService.CalculationService.Trecker(e.Location);
         }
 
         private void RegBtn_Click(object sender, EventArgs e)
@@ -91,6 +92,22 @@ namespace CursorAnalyzer
         private void ExitBtn_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void NameTextBox_onFocus(object sender, EventArgs e)
+        {
+            if (nameTextBox.Text.Equals(namePlaceholder))
+            {
+                nameTextBox.Text = "";
+            }
+        }
+
+        private void NameTextBox_onBlure(object sender, EventArgs e)
+        {
+            if (nameTextBox.Text.Equals(""))
+            {
+                nameTextBox.Text = namePlaceholder;
+            }
         }
     }
 }

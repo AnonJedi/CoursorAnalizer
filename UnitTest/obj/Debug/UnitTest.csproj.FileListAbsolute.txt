@@ -1,0 +1,7 @@
+C:\D\git\CoursorAnalizer\UnitTest\bin\Debug\UnitTest.dll
+C:\D\git\CoursorAnalizer\UnitTest\bin\Debug\UnitTest.pdb
+C:\D\git\CoursorAnalizer\UnitTest\bin\Debug\CoursorAnalizer.exe
+C:\D\git\CoursorAnalizer\UnitTest\bin\Debug\CoursorAnalizer.pdb
+C:\D\git\CoursorAnalizer\UnitTest\obj\Debug\UnitTest.csprojResolveAssemblyReference.cache
+C:\D\git\CoursorAnalizer\UnitTest\obj\Debug\UnitTest.dll
+C:\D\git\CoursorAnalizer\UnitTest\obj\Debug\UnitTest.pdb

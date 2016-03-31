@@ -1,5 +1,8 @@
 ﻿namespace CursorAnalyzer.model.domain
 {
+    /// <summary>
+    /// POJO class
+    /// </summary>
     public class Shape
     {
         private int x, y, size, shapeNumber;
