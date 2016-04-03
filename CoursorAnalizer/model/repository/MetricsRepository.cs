@@ -32,7 +32,7 @@ namespace CursorAnalyzer
         /// <param name="energyContainer">List with energies</param>
         public static void SaveMouseParamsAndMetrics(
             string userName, List<double> midDiffTracks, List<double> maxDiffTracks, List<double> T, 
-            List<float[]> ampContainer, List<double> mouseSpeed, List<double> energyContainer)
+            List<float[]> ampContainer, List<double> mouseSpeed, List<double> energyContainer, List<double> distanceLen)
         {
             byte[] byteStream;
 
@@ -123,6 +123,15 @@ namespace CursorAnalyzer
                 idAttribute.InnerText = "15";
                 valueAttribute = xmlDocument.CreateAttribute("value");
                 valueAttribute.InnerText = energyContainer[i].ToString();
+                featureNode.Attributes.Append(idAttribute);
+                featureNode.Attributes.Append(valueAttribute);
+                realizationNode.AppendChild(featureNode);
+
+                featureNode = xmlDocument.CreateElement("Feature");
+                idAttribute = xmlDocument.CreateAttribute("id");
+                idAttribute.InnerText = "16";
+                valueAttribute = xmlDocument.CreateAttribute("value");
+                valueAttribute.InnerText = distanceLen[i].ToString();
                 featureNode.Attributes.Append(idAttribute);
                 featureNode.Attributes.Append(valueAttribute);
                 realizationNode.AppendChild(featureNode);

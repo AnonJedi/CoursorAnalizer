@@ -155,7 +155,7 @@ namespace CursorAnalyzer.model.service
             {
                 MetricsRepository.SaveMouseParamsAndMetrics(UserName, calculationService.MidDiffTracks, 
                     calculationService.MaxDiffTracks, calculationService.T, calculationService.AmpContainer, 
-                    calculationService.MouseSpeed, calculationService.EnergyContainer);    
+                    calculationService.MouseSpeed, calculationService.EnergyContainer, calculationService.LensContainer);    
             }
             clickCounter = 0;
             isReg = false;

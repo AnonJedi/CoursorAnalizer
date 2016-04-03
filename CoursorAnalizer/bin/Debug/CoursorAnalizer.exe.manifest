@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoursorAnalizer.exe" size="30208">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoursorAnalizer.exe" size="30720">
       <assemblyIdentity name="CoursorAnalizer" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>YuEEd2h6ZJF5LYsvmrlOl8/9vjE/dDDrcuBu9UkxUT8=</dsig:DigestValue>
+        <dsig:DigestValue>l2vyN8FJT5NT9VgxYvfGuuaM32x8TskZA4kV9OuF0oQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
