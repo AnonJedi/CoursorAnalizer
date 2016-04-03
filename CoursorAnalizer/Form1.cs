@@ -16,8 +16,8 @@ namespace CursorAnalyzer
         private DateTime currentClickTime; //время с начала клика
         private string name;
         private AnalyzerService analyzerService;
-        private string namePlaceholder = "Your name";
-    
+        private const string NamePlaceholder = @"Your name";
+
         #endregion
 
         #region Ctor
@@ -31,7 +31,7 @@ namespace CursorAnalyzer
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (!analyzerService.IsReg)
+            if (!analyzerService.IsReg && DBCheckBox.Checked)
             {
                 MessageBox.Show("Registred please!", "Caution!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -39,7 +39,7 @@ namespace CursorAnalyzer
             {
                 counterLbl.Text = (analyzerService.ClickCounter).ToString();
                 Shape newShape = analyzerService.ParseInputParams(e.X, e.Y, analyzerService.Size, 
-                    pictureBox1.Width, pictureBox1.Height);
+                    pictureBox1.Width, pictureBox1.Height, DBCheckBox.Checked);
                 if (newShape == null) return;
                 bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
                 g = Graphics.FromImage(bitmap);
@@ -59,13 +59,13 @@ namespace CursorAnalyzer
         private void STOPBtn_Click(object sender, EventArgs e)
         {
             if (!analyzerService.IsStarted) return;
-            NameLbl.Text = name + " finished!";
+            if (DBCheckBox.Checked) NameLbl.Text = name + @" finished!";
             bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
             g = Graphics.FromImage(bitmap);
-            g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
+            g.DrawString(@"START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
             pictureBox1.Image = bitmap;
 
-            analyzerService.StopTest();
+            analyzerService.StopTest(DBCheckBox.Checked);
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -76,7 +76,7 @@ namespace CursorAnalyzer
 
         private void RegBtn_Click(object sender, EventArgs e)
         {
-            if (nameTextBox.Text.Equals("") || nameTextBox.Text.Equals(namePlaceholder)) return;
+            if (nameTextBox.Text.Equals("") || nameTextBox.Text.Equals(NamePlaceholder)) return;
             name = nameTextBox.Text;
             if (analyzerService.Registrate(name))
             {
@@ -95,7 +95,7 @@ namespace CursorAnalyzer
 
         private void NameTextBox_onFocus(object sender, EventArgs e)
         {
-            if (nameTextBox.Text.Equals(namePlaceholder))
+            if (nameTextBox.Text.Equals(NamePlaceholder))
             {
                 nameTextBox.Text = "";
             }
@@ -105,7 +105,7 @@ namespace CursorAnalyzer
         {
             if (nameTextBox.Text.Equals(""))
             {
-                nameTextBox.Text = namePlaceholder;
+                nameTextBox.Text = NamePlaceholder;
             }
         }
     }

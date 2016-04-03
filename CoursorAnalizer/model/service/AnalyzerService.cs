@@ -65,6 +65,7 @@ namespace CursorAnalyzer.model.service
         public AnalyzerService()
         {
             userRepository = new UserRepository("DataBase.xml");
+            calculationService = new ParamsCalculationService();
             isStarted = false;
             clickCounter = 0;
         }
@@ -78,8 +79,9 @@ namespace CursorAnalyzer.model.service
         /// <param name="shapeSize">Size of square side</param>
         /// <param name="width">Picture box width</param>
         /// <param name="height">Picture box height</param>
+        /// <param name="isStore">Flag for check authorization</param>
         /// <returns>POJO class with data of new square and click count</returns>
-        public Shape ParseInputParams(int mouseX, int mouseY, int shapeSize, int width, int height)
+        public Shape ParseInputParams(int mouseX, int mouseY, int shapeSize, int width, int height, bool isStore)
         {
             currentClickTime = DateTime.Now;
             calculationService.ClickTimeContainer.Add(currentClickTime);
@@ -95,13 +97,14 @@ namespace CursorAnalyzer.model.service
             }
 
             //проверка, начат ли тест
-            if (!IsStarted && clickCounter == 0)
+            if ((!IsStarted && clickCounter == 0) || (!isStore && clickCounter == 0))
             {
                 isStarted = true;
                 x = 200;
                 y = 200;
                 size = 200;
-                return new Shape(x, y, size, 0);          
+                clickCounter++;
+                return new Shape(x, y, size, clickCounter);          
             }
             if (((mouseX - x > shapeSize) || (mouseY - y > shapeSize) ||
                  (mouseX - x < 0) || (mouseY - y < 0)))
@@ -136,7 +139,8 @@ namespace CursorAnalyzer.model.service
         /// <summary>
         /// Method for saving result data in db
         /// </summary>
-        public void StopTest()
+        /// <param name="isStore">Flag for saving data in db or find user</param>
+        public void StopTest(bool isStore)
         {
             if (ClickCounter > 1)
             {
@@ -147,12 +151,16 @@ namespace CursorAnalyzer.model.service
 
             calculationService.MathExpectation(clickCounter);
             calculationService.Variance(clickCounter);
-            MetricsRepository.SaveMouseParamsAndMetrics(UserName, calculationService.MidDiffTracks, calculationService.MaxDiffTracks, 
-                calculationService.T, calculationService.AmpContainer, calculationService.MouseSpeed, calculationService.EnergyContainer);
-            //MetricsRepository.SaveTXT(Name, ParamsCalculationService.Cmid, ParamsCalculationService.Cmax, ParamsCalculationService.T, ParamsCalculationService.ampList, ParamsCalculationService.energyList);
+            if (isStore)
+            {
+                MetricsRepository.SaveMouseParamsAndMetrics(UserName, calculationService.MidDiffTracks, 
+                    calculationService.MaxDiffTracks, calculationService.T, calculationService.AmpContainer, 
+                    calculationService.MouseSpeed, calculationService.EnergyContainer);    
+            }
             clickCounter = 0;
             isReg = false;
             isStarted = false;
+            calculationService = new ParamsCalculationService();
         }
 
         /// <summary>
@@ -169,7 +177,6 @@ namespace CursorAnalyzer.model.service
             else
             {
                 UserName = name;
-                calculationService = new ParamsCalculationService();
                 isReg = true;
             }
             return isReg;
