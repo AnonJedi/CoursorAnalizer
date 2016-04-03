@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 
 
@@ -395,63 +396,56 @@ namespace CursorAnalyzer
         /// <param name="y">Y-coord of square</param>
         /// <param name="counter">Count of clicks</param>
         /// <param name="time">Previous click time</param>
-        public void SaverParam(int w, int x, int y, int counter, DateTime time)
+        public void SaveParam(int w, int x, int y, int counter, DateTime time)
         {
             if (counter > 0)
             {
                 double a;
-                double C;
+                double c;
                 try
                 {
                     a = (y + w / 2 - mousePoint.Y - w / 2) / (x - mousePoint.X - x / 2);
-                    C = mousePoint.Y - a * (mousePoint.Y + w / 2);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     a = 0;
-                    C = mousePoint.Y - a * (mousePoint.Y + w / 2);
                 }
+                c = mousePoint.Y - a * (mousePoint.Y + w / 2);
                
-                if (mouseTracksContainer[counter - 1].Count >= 128)
+                lensContainer.Add(Math.Sqrt(Math.Pow(x + w / 2 - mousePoint.X + w / 2, 2)) 
+                    + Math.Sqrt(Math.Pow(y + w / 2 - mousePoint.Y + w / 2, 2)));
+                shapeSize.Add(w);
+                MidDiffTracks.Add(0);
+
+                for (var i = 0; i < mouseTracksContainer[counter - 1].Count; i++)
                 {
-                    lensContainer.Add(Math.Sqrt(Math.Pow(x + w / 2 - mousePoint.X + w / 2, 2)) 
-                        + Math.Sqrt(Math.Pow(y + w / 2 - mousePoint.Y + w / 2, 2)));
-                    shapeSize.Add(w);
-                    MidDiffTracks.Add(0);
-
-                    for (int i = 0; i < mouseTracksContainer[counter - 1].Count; )
-                    {
-                        diffContainer.Add(Math.Abs(a * mouseTracksContainer[counter - 1][i].X + 
-                            mouseTracksContainer[counter - 1][i].Y + C) / Math.Sqrt(a * a + 1));
-                        i += (int)(mouseTracksContainer[counter - 1].Count / 64);
-                        MidDiffTracks[MidDiffTracks.Count - 1] += diffContainer[diffContainer.Count - 1];
-                    }
-                    MidDiffTracks[MidDiffTracks.Count - 1] = MidDiffTracks[MidDiffTracks.Count - 1] / diffContainer.Count / 
-                        lensContainer[lensContainer.Count - 1];
-                    
-                    for (int i = 64; i < mouseTracksContainer[counter - 1].Count; i += 64)
-                    {
-                        distanceLen.Add(Math.Sqrt(Math.Pow(mouseTracksContainer[counter - 1][i].X - 
-                            mouseTracksContainer[counter - 1][i - 64].X, 2)) + 
-                            Math.Sqrt(Math.Pow(mouseTracksContainer[counter - 1][i].Y - 
-                            mouseTracksContainer[counter - 1][i - 64].Y, 2)));
-                    }
+                    diffContainer.Add(Math.Abs(a * mouseTracksContainer[counter - 1][i].X + 
+                        mouseTracksContainer[counter - 1][i].Y + c) / Math.Sqrt(a * a + 1));
+                    MidDiffTracks[MidDiffTracks.Count - 1] += diffContainer[diffContainer.Count - 1];
                 }
-                else return;
+                MidDiffTracks[MidDiffTracks.Count - 1] = MidDiffTracks[MidDiffTracks.Count - 1] / diffContainer.Count / 
+                    lensContainer[lensContainer.Count - 1];
+                    
+                for (var i = 0; i < mouseTracksContainer[counter - 1].Count - 1; i++)
+                {
+                    distanceLen.Add(Math.Sqrt(Math.Pow(mouseTracksContainer[counter - 1][i].X - 
+                        mouseTracksContainer[counter - 1][i + 1].X, 2)) + 
+                        Math.Sqrt(Math.Pow(mouseTracksContainer[counter - 1][i].Y - 
+                        mouseTracksContainer[counter - 1][i + 1].Y, 2)));
+                }
 
-                double max = diffContainer[0];
-                foreach (double d in diffContainer) if (d > max) max = d;
+                var max = diffContainer[0];
+                foreach (var d in diffContainer) if (d > max) max = d;
                  
                 maxDiffTracks.Add(max / lensContainer[lensContainer.Count - 1]);
                 
-                int n = 128;
+                var n = 128;
                 double temp = 0;
                  
-                float[] ar = new float[n];
-                float[] ai = new float[n];
-                float[] amp;
+                var ar = new float[n];
+                var ai = new float[n];
 
-                for (int i = 0; i < n; i++)
+                for (var i = 0; i < n; i++)
                 {
                     if (i < distanceLen.Count) ar[i] = (float)distanceLen[i];
                     else ar[i] = 0;
@@ -460,26 +454,24 @@ namespace CursorAnalyzer
 
                 FFT.ComplexToComplex(-1, n, ar, ai);
 
-                float[] am = new float[n];
+                var am = new float[n];
                 double energy = 0;
-                for (int i = 0; i < n; i++)
+                for (var i = 0; i < n; i++)
                 {
                     ar[ar.Length - i - 1] = ar[ar.Length - i - 1] - ar[i];
                     ai[ai.Length - i - 1] = ai[ai.Length - i - 1] + ai[i];
                     am[i] = ((ar[i] * ar[i] + ai[i] * ai[i]) / am.Length);
                 }
 
-                for (int i = 0; i < distanceLen.Count; i++)
+                for (var i = 0; i < distanceLen.Count; i++)
                 {
-                    temp += distanceLen[i];
-                    energy += Math.Pow(distanceLen[i], 2); 
+                    temp += i;
+                    energy += Math.Pow(i, 2); 
                 }
 
                 EnergyContainer.Add(energy);
-
-                amp = new float[n];
-
-                for (int i = 0; i < n; i++) amp[i] = am[i] / (float)energy;                 
+                var amp = new float[n];
+                for (var i = 0; i < n; i++) amp[i] = am[i] / (float)energy;                 
 
                 ampContainer.Add(amp);
                
@@ -488,14 +480,14 @@ namespace CursorAnalyzer
                 diffContainer = new List<double>();
             }
 
-            this.MousePoint = new Point(x, y);
+            MousePoint = new Point(x, y);
         }
 
         /// <summary>
         /// Method for save opsition in container
         /// </summary>
         /// <param name="mousePos">Mouse coords</param>
-        public void Trecker(Point mousePos)
+        public void Tracker(Point mousePos)
         {
             MouseTrack.Add(mousePos);
         }

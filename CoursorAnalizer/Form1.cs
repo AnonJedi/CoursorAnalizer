@@ -58,35 +58,34 @@ namespace CursorAnalyzer
 
         private void STOPBtn_Click(object sender, EventArgs e)
         {
-            if (analyzerService.IsStarted)
-            {
-                NameLbl.Text = name + " finished!";
-                bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
-                g = Graphics.FromImage(bitmap);
-                g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
-                pictureBox1.Image = bitmap;
+            if (!analyzerService.IsStarted) return;
+            NameLbl.Text = name + " finished!";
+            bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);   //инициализация параметров          
+            g = Graphics.FromImage(bitmap);
+            g.DrawString("START", new Font("Consolas", 20), new SolidBrush(Color.Black), pictureBox1.Width / 2, pictureBox1.Height / 2);
+            pictureBox1.Image = bitmap;
 
-                analyzerService.StopTest();
-            }
+            analyzerService.StopTest();
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (analyzerService.IsStarted)
-                analyzerService.CalculationService.Trecker(e.Location);
+                analyzerService.CalculationService.Tracker(e.Location);
         }
 
         private void RegBtn_Click(object sender, EventArgs e)
         {
+            if (nameTextBox.Text.Equals("") || nameTextBox.Text.Equals(namePlaceholder)) return;
             name = nameTextBox.Text;
             if (analyzerService.Registrate(name))
             {
                 counterLbl.Text = "0";
                 NameLbl.Text = name + " in action!";
-                nameTextBox.Text = "";   
+                nameTextBox.Text = "";
+                NameTextBox_onBlure(sender, e);
             }
             else MessageBox.Show("This name alredy exist!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            
         }
 
         private void ExitBtn_Click(object sender, EventArgs e)

@@ -12,7 +12,7 @@ namespace UnitTest
         public void SaveParamsWithZeroCount()
         {
             ParamsCalculationService paramsService = new ParamsCalculationService();
-            paramsService.SaverParam(0, 0, 0, 0, new DateTime());
+            paramsService.SaveParam(0, 0, 0, 0, new DateTime());
             var expected = new List<float[]>();
             CollectionAssert.AreEqual(paramsService.AmpContainer, expected, "Amp container mast be empty");
         }

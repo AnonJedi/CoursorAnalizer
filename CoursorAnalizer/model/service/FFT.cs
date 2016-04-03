@@ -24,17 +24,17 @@ namespace CursorAnalyzer
             {
                 if (j >= i)
                 {
-                    float tempr = ar[j]*scale;
-                    float tempi = ai[j]*scale;
+                    var tempr = ar[j] * scale;
+                    var tempi = ai[j] * scale;
 
-                    ar[j] = ar[i]*scale;
-                    ai[j] = ai[i]*scale;
+                    ar[j] = ar[i] * scale;
+                    ai[j] = ai[i] * scale;
 
                     ar[i] = tempr;
                     ai[i] = tempi;
                 }
 
-                int m = n/2;
+                var m = n/2;
 
                 while (m >= 1 && j >= m)
                 {
@@ -47,22 +47,22 @@ namespace CursorAnalyzer
 
             int mmax, istep;
 
-            for (mmax = 1, istep = 2*mmax; mmax < n; mmax = istep, istep = 2*mmax)
+            for (mmax = 1, istep = 2; mmax < n; mmax = istep, istep = 2 * mmax)
             {
-                float delta = (float)(sign*Math.PI)/(float) mmax;
+                var delta = (float)(sign * Math.PI) / mmax;
 
-                for (int k = 0; k < mmax; ++k)
+                for (var k = 0; k < mmax; ++k)
                 {
-                    float w = (float) k*delta;
-                    float wr = (float) Math.Cos(w);
-                    float wi = (float) Math.Sin(w);
+                    var w = k * delta;
+                    var wr = (float) Math.Cos(w);
+                    var wi = (float) Math.Sin(w);
 
                     for (i = k;  i < n-1; i += istep)
                     {
                         j = i + mmax;
 
-                        float tr = wr*ar[j] - wi*ai[j];
-                        float ti = wr*ai[j] + wi*ar[j];
+                        var tr = wr * ar[j] - wi * ai[j];
+                        var ti = wr * ai[j] + wi * ar[j];
 
                         ar[j] = ar[i] - tr;
                         ai[j] = ai[i] - ti;

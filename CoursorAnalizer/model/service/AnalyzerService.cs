@@ -94,36 +94,43 @@ namespace CursorAnalyzer.model.service
                 calculationService.MouseTrack = new List<Point>();
             }
 
-            if (!isStarted && (clickCounter == 0) || 
-                ((mouseX - x <= shapeSize) && (mouseY - y <= shapeSize) && 
-                (mouseX - x >= 0) && (mouseY - y >= 0)))     //проверка, начат ли тест
+            //проверка, начат ли тест
+            if (!IsStarted && clickCounter == 0)
             {
-                previousClickTime = new DateTime(currentClickTime.Ticks - previousClickTime.Ticks);
-                calculationService.ClickTimeContainer.Add(previousClickTime);
-                previousClickTime = currentClickTime;
-
-                while (true)
-                {
-                    var oldX = x;
-                    var oldY = y;
-
-                    size = random.Next(180) + 20;
-                    x = random.Next(width - size);
-                    y = random.Next(height - size);
-
-                    var distance = Math.Sqrt(Math.Pow(oldX - x, 2) + Math.Pow(oldY - y, 2));
-
-                    if (distance >= 128) break;
-                }
-
-                
                 isStarted = true;
-                calculationService.SaverParam(size, x, y, clickCounter, 
-                    calculationService.ClickTimeContainer[calculationService.ClickTimeContainer.Count - 1]);
-                clickCounter++;
-                return new Shape(x, y, size, clickCounter);
+                x = 200;
+                y = 200;
+                size = 200;
+                return new Shape(x, y, size, 0);          
             }
-            return null;
+            if (((mouseX - x > shapeSize) || (mouseY - y > shapeSize) ||
+                 (mouseX - x < 0) || (mouseY - y < 0)))
+            {
+                return null;
+            }
+          
+            previousClickTime = new DateTime(currentClickTime.Ticks - previousClickTime.Ticks);
+            calculationService.ClickTimeContainer.Add(previousClickTime);
+            previousClickTime = currentClickTime;
+
+            while (true)
+            {
+                var oldX = x;
+                var oldY = y;
+
+                size = random.Next(180) + 20;
+                x = random.Next(width - size);
+                y = random.Next(height - size);
+
+                var distance = Math.Sqrt(Math.Pow(oldX - x, 2) + Math.Pow(oldY - y, 2));
+
+                if (distance >= 128) break;
+            }
+
+            calculationService.SaveParam(size, x, y, clickCounter, 
+                calculationService.ClickTimeContainer[calculationService.ClickTimeContainer.Count - 1]);
+            clickCounter++;
+            return new Shape(x, y, size, clickCounter);
         }
 
         /// <summary>

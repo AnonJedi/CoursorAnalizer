@@ -120,7 +120,7 @@
             this.NameLbl.AutoSize = true;
             this.NameLbl.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.NameLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.NameLbl.Location = new System.Drawing.Point(73, 467);
+            this.NameLbl.Location = new System.Drawing.Point(73, 500);
             this.NameLbl.Name = "NameLbl";
             this.NameLbl.Size = new System.Drawing.Size(0, 19);
             this.NameLbl.TabIndex = 8;
@@ -171,7 +171,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Analyzer";
-            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Analizer";
